@@ -1,13 +1,13 @@
-package objects;
+package evicentemedina.esperpento.objects;
 
-import com.sun.istack.internal.NotNull;
+import android.support.annotation.NonNull;
 
 public class Chatroom {
     private String name, descrip, icon, community, admin;
 
     // Full constructor
-    public Chatroom(@NotNull String name, String descrip, String icon,
-                    @NotNull String community, @NotNull String admin) {
+    public Chatroom(@NonNull String name, String descrip, String icon,
+                    @NonNull String community, @NonNull String admin) {
         this.name = name;
         this.descrip = descrip;
         this.icon = icon;

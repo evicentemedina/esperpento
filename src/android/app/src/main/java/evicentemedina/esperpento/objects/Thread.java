@@ -1,17 +1,17 @@
-package objects;
+package evicentemedina.esperpento.objects;
 
-import com.sun.istack.internal.NotNull;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
 public class Thread {
-    private int id, upvotes, downvotes;
+    private int id, votes;
     private String title, content, community, user;
-    private Date time, last_edited;
+    private Date time, edited;
 
     // New thread constructor
-    public Thread(@NotNull String title, @NotNull String content,
-                  @NotNull String community, @NotNull String user) {
+    public Thread(@NonNull String title, @NonNull String content,
+                  @NonNull String community, @NonNull String user) {
         this.title = title;
         this.content = content;
         this.community = community;
@@ -19,17 +19,14 @@ public class Thread {
     }
 
     // Full constructor
-    public Thread(int id, @NotNull String title, @NotNull String content,
-                  @NotNull Date time, int upvotes, int downvotes,
-                  Date last_edited, @NotNull String community,
-                  @NotNull String user) {
+    public Thread(int id, @NonNull String title, @NonNull String content, @NonNull Date time,
+                  int votes, Date edited, @NonNull String community, @NonNull String user) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.time = time;
-        this.upvotes = upvotes;
-        this.downvotes = downvotes;
-        this.last_edited = last_edited;
+        this.votes = votes;
+        this.edited = edited;
         this.community = community;
         this.user = user;
     }
@@ -54,24 +51,20 @@ public class Thread {
         return content;
     }
 
-    public int getUpvotes() {
-        return upvotes;
-    }
-
-    public int getDownvotes() {
-        return downvotes;
+    public int getVotes() {
+        return votes;
     }
 
     public Date getTime() {
         return time;
     }
 
-    public void setLast_edited(Date last_edited) {
-        this.last_edited = last_edited;
+    public void setEdited(Date edited) {
+        this.edited = edited;
     }
 
-    public Date getLast_edited() {
-        return last_edited;
+    public Date getEdited() {
+        return edited;
     }
 
     public String getCommunity() {

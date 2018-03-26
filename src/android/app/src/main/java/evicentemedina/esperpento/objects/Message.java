@@ -1,6 +1,6 @@
-package objects;
+package evicentemedina.esperpento.objects;
 
-import com.sun.istack.internal.NotNull;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
@@ -10,16 +10,15 @@ public class Message {
     private Date time;
 
     // New message constructor
-    public Message(@NotNull String room, @NotNull String user,
-                   @NotNull String content) {
+    public Message(@NonNull String content, @NonNull String room, @NonNull String user) {
+        this.content = content;
         this.room = room;
         this.user = user;
-        this.content = content;
     }
 
     // Full constructor
-    public Message(int id, @NotNull String content, @NotNull Date time,
-                   @NotNull String room, @NotNull String user) {
+    public Message(int id, @NonNull String content, @NonNull Date time,
+                   @NonNull String room, @NonNull String user) {
         this.id = id;
         this.content = content;
         this.time = time;
@@ -31,19 +30,19 @@ public class Message {
         return id;
     }
 
-    public String getRoom() {
-        return room;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
     public String getContent() {
         return content;
     }
 
     public Date getTime() {
         return time;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public String getUser() {
+        return user;
     }
 }

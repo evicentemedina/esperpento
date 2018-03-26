@@ -1,13 +1,13 @@
-package objects;
+package evicentemedina.esperpento.objects;
 
-import com.sun.istack.internal.NotNull;
+import android.support.annotation.NonNull;
 
 public class Community {
     private String name, descrip, icon, color, bg_color, admin;
 
     // Full constructor
-    public Community(@NotNull String name, String descrip, String icon,
-                     String color, String bg_color, @NotNull String admin) {
+    public Community(@NonNull String name, String descrip, String icon,
+                     String color, String bg_color, @NonNull String admin) {
         this.name = name;
         this.descrip = descrip;
         this.icon = icon;
