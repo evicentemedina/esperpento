@@ -4,6 +4,18 @@ import time
 import socket
 import threading
 
+import conn
+import user
+
+conn = conn.Conn()
+for u in conn.selectUsers():
+    print(u.asList())
+for c in conn.selectCommunities():
+    print(c.asList())
+for t in conn.selectThreads():
+    print(t.asList())
+
+"""
 def help(str):
     print(str)
     sys.exit()
@@ -37,4 +49,4 @@ except:
     help("Error: couldn't bind socket on "+ip+":"+port+".")
 
 server.listen(10)
-
+"""
