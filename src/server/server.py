@@ -5,7 +5,6 @@ import socket
 import threading
 
 import conn
-import user
 
 conn = conn.Conn()
 for u in conn.selectUsers():
@@ -14,6 +13,12 @@ for c in conn.selectCommunities():
     print(c.asList())
 for t in conn.selectThreads():
     print(t.asList())
+for c in conn.selectComments():
+    print(c.asList())
+for c in conn.selectChatrooms():
+    print(c.asList())
+for m in conn.selectMessages():
+    print(m.asList())
 
 """
 def help(str):

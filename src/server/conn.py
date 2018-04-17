@@ -1,7 +1,5 @@
 import psycopg2
-import user
-import community
-import thread
+import objs
 
 class Conn:
 
@@ -28,7 +26,7 @@ class Conn:
         rows = self.cursor.fetchall()
         users = []
         for r in rows:
-            users.append(user.User(r))
+            users.append(objs.User(r))
         return users
 
     def selectCommunities(self):
@@ -36,7 +34,7 @@ class Conn:
         rows = self.cursor.fetchall()
         comms = []
         for r in rows:
-            comms.append(community.Community(r))
+            comms.append(objs.Community(r))
         return comms
 
     def selectThreads(self):
@@ -44,8 +42,32 @@ class Conn:
         rows = self.cursor.fetchall()
         threads = []
         for r in rows:
-            threads.append(thread.Thread(r))
+            threads.append(objs.Thread(r))
         return threads
+
+    def selectComments(self):
+        self.cursor.execute("select * from comments")
+        rows = self.cursor.fetchall()
+        comments = []
+        for r in rows:
+            comments.append(objs.Comment(r))
+        return comments
+
+    def selectChatrooms(self):
+        self.cursor.execute("select * from chatrooms")
+        rows = self.cursor.fetchall()
+        chatrooms = []
+        for r in rows:
+            chatrooms.append(objs.Chatroom(r))
+        return chatrooms
+
+    def selectMessages(self):
+        self.cursor.execute("select * from messages")
+        rows = self.cursor.fetchall()
+        messages = []
+        for r in rows:
+            messages.append(objs.Message(r))
+        return messages
 
 """
 #cursor.execute("insert into users values('test4','test');select passwd from users;--')")
