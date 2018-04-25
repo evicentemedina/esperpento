@@ -70,6 +70,18 @@ class Conn:
         return messages
 
 """
+    def select(self, table:str, columns:str, where:str):
+        query = "select "
+        if columns == "":
+            query += "*"
+        query += " from "+columns
+        if where != "":
+            query += " where "+where
+        self.cursor.execute(query)
+        rows = []
+"""
+
+"""
 #cursor.execute("insert into users values('test4','test');select passwd from users;--')")
 #conn.commit()
 cursor.execute("select * from users")
