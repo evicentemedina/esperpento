@@ -7,7 +7,7 @@
 - Creación de tablas mediante SQL para PostgreSQL, usando tipos de datos
   propios como 'serial' y sintaxis de restricciones (constrains) propias
 
-    ./src/db/postgresql.sql
+      ./src/db/postgresql.sql
 
   [https://www.postgresql.org/docs/10/static/index.html](https://www.postgresql.org/docs/10/static/index.html)
 
@@ -61,7 +61,7 @@
 
 - Desarrollado en Python 3.6 usando la librería Psycopg 2.7.5
 
-    ./src/server/*
+      ./src/server/*
 
   [http://initd.org/psycopg/docs/](http://initd.org/psycopg/docs/)
 
@@ -69,6 +69,6 @@
 
 - Migración del desarrollo a PHP usando el soporte integrado de PostgreSQL
 
-    ./php/*
+      ./php/*
 
   [http://php.net/manual/en/book.pgsql.php](http://php.net/manual/en/book.pgsql.php)
