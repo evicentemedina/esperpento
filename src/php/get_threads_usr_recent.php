@@ -2,9 +2,9 @@
 if(isset($_GET["u"])){
   include 'conn.php';
   $sql = <<<SQL
-    select * from 'threads' where 'community' in(
-      select 'community' from 'users_communities' where 'user'=$1
-    ) order by 'time' desc limit 20
+    select * from threads where community in(
+      select community from users_communities where user=$1
+    ) order by "time" desc limit 20
 SQL;
   $res = pg_query_params($con, $sql, array($_GET["u"]));
   $response["c"] = array();
@@ -13,7 +13,6 @@ SQL;
     $response["c"][$i] = $row;
     $i++;
   }
-  pg_free_result($res);
   include 'close.php';
 }
 ?>

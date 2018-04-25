@@ -40,9 +40,9 @@
 
     Adición en '/usr/share/webapps/phppgadmin/classes/database/Connection.php':
 
-        switch (substr($version,0,4)) {
-            case '10.3': return 'Postgres'; break;
-        }
+      switch (substr($version,0,4)) {
+          case '10.3': return 'Postgres'; break;
+      }
 
     En la línea 91
 
@@ -72,3 +72,13 @@
       ./php/*
 
   [http://php.net/manual/en/book.pgsql.php](http://php.net/manual/en/book.pgsql.php)
+
+  Dado que PHP ya fue instalado para Apache anteriormente para el uso de PhpPgAdmin, no es necesario hacer más que copiar los archivos .php en:
+
+      /srv/http/esperpento
+
+  O el directorio del servidor correspondiente.
+
+  El funcionamiento de los archivos PHP está basado en la realización de las operaciones correspondientes en la Base de Datos con los datos que se reciban por GET, tras su debida validación y haber llevado a cabo las comprobaciones necesarias, y la devolución de un resultado en formato JSON que contenga una clave "s" (success) de valor binario (0 ó 1), dependiendo de si la operación ha tenido éxito o no, y, si es necesario, una clave "c" (content) de valor otro objeto o array de objetos JSON con los datos que sea necesario devolver.
+
+  En caso de no recibir los parámetros GET imprescindibles, directamente ni se realizará ninguna acción, ni se devolverá ningún resultado.
