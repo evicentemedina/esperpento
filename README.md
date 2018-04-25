@@ -64,3 +64,11 @@
   ./src/server/*
 
   [http://initd.org/psycopg/docs/](http://initd.org/psycopg/docs/)
+
+  *__Descontinuado__*
+
+- Migración del desarrollo a PHP usando el soporte integrado de PostgreSQL
+
+  ./php/*
+
+  [http://php.net/manual/en/book.pgsql.php](http://php.net/manual/en/book.pgsql.php)
