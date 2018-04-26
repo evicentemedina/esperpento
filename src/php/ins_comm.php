@@ -3,13 +3,13 @@ if(isset($_GET["u"]) && isset($_GET["p"]) && isset($_GET["name"])){
   include 'conn.php';
   $res = pg_query_params(
     $con,
-    "select name from users where name=$1 and passwd=$2",
+    "select 1 from users where name=$1 and passwd=$2",
     array($_GET["u"], $_GET["p"])
   );
   if(pg_num_rows($res) == 1){
     $res = pg_query_params(
       $con,
-      "select name from communities where name=$1",
+      "select 1 from communities where name=$1",
       array($_GET["name"])
     );
     if(pg_num_rows($res) == 0){

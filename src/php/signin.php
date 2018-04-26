@@ -3,7 +3,7 @@ if(isset($_GET["u"]) && isset($_GET["p"])){
   include 'conn.php';
   $res = pg_query_params(
     $con,
-    "select name from users where name=$1",
+    "select 1 from users where name=$1",
     array($_GET["u"])
   );
   if(pg_num_rows($res) == 0){
