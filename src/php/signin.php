@@ -7,7 +7,9 @@ if(isset($_GET["u"]) && isset($_GET["p"])){
     array($_GET["u"])
   );
   if(pg_num_rows($res) == 0){
-    if(
+    if(strlen($_GET["u"]) > 25 || strlen($_GET["p"]) > 50){
+      $response["s"] = -1;
+    }else if(
       pg_insert(
         $con,
         "users",
