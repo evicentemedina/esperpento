@@ -1,29 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="evicentemedina.esperpento.LoginActivity"
     >
-
-    <android.support.design.widget.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:padding="@dimen/padding_content"
+        android:orientation="vertical"
         >
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/logo_image"
+            android:src="@drawable/ic_launcher_background"
             />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_login" />
-
-</android.support.design.widget.CoordinatorLayout>
+        <EditText
+            android:id="@+id/loginEtUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/user"
+            android:inputType="text"
+            android:maxLength="20"
+            />
+        <EditText
+            android:id="@+id/loginEtPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="text|textPassword"
+            android:maxLength="20"
+            />
+        <CheckBox
+            android:id="@+id/loginCbShowPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/show_password"
+            android:textColor="@android:color/tertiary_text_light"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/loginBtnSignin"
+                style="@android:style/Widget.Holo.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/sign_in"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                />
+            <Button
+                android:id="@+id/loginBtnLogin"
+                style="@android:style/Widget.Holo.Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:text="@string/log_in"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
