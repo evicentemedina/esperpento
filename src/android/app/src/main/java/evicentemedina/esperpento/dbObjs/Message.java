@@ -1,4 +1,4 @@
-package evicentemedina.esperpento.objects;
+package evicentemedina.esperpento.dbObjs;
 
 import android.support.annotation.NonNull;
 

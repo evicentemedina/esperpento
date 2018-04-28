@@ -1,5 +1,6 @@
 package evicentemedina.esperpento;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String username, userpass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,12 +26,15 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.nav_open, R.string.nav_close);
+            this, drawer, toolbar, R.string.nav_open, R.string.nav_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        username = getIntent().getStringExtra("user");
+        userpass = getIntent().getStringExtra("pass");
     }
 
     @Override
@@ -70,6 +76,9 @@ public class MainActivity extends AppCompatActivity
 
         }else if(id == R.id.nav_send) {
 
+        }else if(id == R.id.nav_logout) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

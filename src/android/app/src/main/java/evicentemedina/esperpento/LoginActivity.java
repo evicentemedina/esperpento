@@ -2,20 +2,23 @@ package evicentemedina.esperpento;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import evicentemedina.esperpento.objects.Constants;
@@ -43,11 +46,31 @@ public class LoginActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.login, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menuLogin_toggleUrl) {
+            Constants.toggleUrl();
+            item.setChecked(!item.isChecked());
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         if(id == R.id.loginBtnLogin) {
-            String user = etUser.getText().toString(),
-                   pass = etPass.getText().toString();
+            final String user = etUser.getText().toString(),
+                         pass = etPass.getText().toString();
             if(!user.isEmpty() && !pass.isEmpty()) {
                 final View fv = v;
                 String url = Constants.URL+"login.php?u="+user+"&p="+pass;
@@ -55,18 +78,30 @@ public class LoginActivity extends AppCompatActivity
                     Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Toast.makeText(fv.getContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                            try {
+                                if(response.getInt("s") == 1) {
+                                    startActivity(new Intent(fv.getContext(), MainActivity.class)
+                                            .putExtra("user", user)
+                                            .putExtra("pass", pass)
+                                    );
+                                    finish();
+                                }else{
+                                    Snackbar.make(fv, R.string.user_or_pass_incorrect, Snackbar.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                Snackbar.make(fv, response.toString(), Snackbar.LENGTH_LONG).show();
+                            }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(fv.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(fv, "Error "+error.networkResponse.statusCode, Snackbar.LENGTH_LONG).show();
                         }
                     }
                 );
                 VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-                //startActivity(new Intent(v.getContext(), MainActivity.class));
-                //finish();
+            }else{
+                Snackbar.make(v, " ", Snackbar.LENGTH_LONG).show();
             }
         }else if(id == R.id.loginBtnSignin) {
             startActivity(new Intent(v.getContext(), SignInActivity.class));
