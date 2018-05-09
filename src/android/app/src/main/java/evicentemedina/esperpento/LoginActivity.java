@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity
                 );
                 VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
             }else{
-                Snackbar.make(v, " ", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(v, "User or password empty", Snackbar.LENGTH_LONG).show();
             }
         }else if(id == R.id.loginBtnSignin) {
             startActivity(new Intent(v.getContext(), SignInActivity.class));
