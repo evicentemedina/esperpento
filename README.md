@@ -69,7 +69,7 @@
 
 - Migración del desarrollo a PHP usando el soporte integrado de PostgreSQL
 
-      ./php/*
+      ./src/php/*
 
   [http://php.net/manual/en/book.pgsql.php](http://php.net/manual/en/book.pgsql.php)
 
@@ -82,3 +82,31 @@
   El funcionamiento de los archivos PHP está basado en la realización de las operaciones correspondientes en la Base de Datos con los datos que se reciban por GET, tras su debida validación y haber llevado a cabo las comprobaciones necesarias, y la devolución de un resultado en formato JSON que contenga una clave "s" (success) de valor binario (0 ó 1), dependiendo de si la operación ha tenido éxito o no, y, si es necesario, una clave "c" (content) de valor otro objeto o array de objetos JSON con los datos que sea necesario devolver.
 
   En caso de no recibir los parámetros GET imprescindibles, directamente ni se realizará ninguna acción, ni se devolverá ningún resultado.
+
+
+## Cliente Android
+
+- Desarrollado en Java (y XML para la interfaz) con Android Studio 3.1, el entorno
+  de desarrollo oficial de Android.
+
+      ./src/android
+
+- Soporte a partir de la API 21 (Android 5.0).
+
+- Comunicación con el servidor implementada mediante Volley:
+
+  [https://developer.android.com/training/volley/](https://developer.android.com/training/volley/)
+
+  Usando cola de peticiones (RequestQueue) con la ayuda de un objeto estático 
+  construido para su uso en toda la aplicación:
+
+  [https://developer.android.com/training/volley/requestqueue#singleton](https://developer.android.com/training/volley/requestqueue#singleton)
+
+  Y añadiendo peticiones de objetos JSON a dicha cola desde el punto de la 
+  aplicación que sea necesario:
+
+  [https://developer.android.com/training/volley/request#request-json](https://developer.android.com/training/volley/request#request-json)
+
+  De este modo, se controla eficientemente tanto la posible concurrencia de 
+  peticiones, como el que las mismas se realicen de manera asíncrona y no bloqueen
+  la ejecución de la aplicación.
