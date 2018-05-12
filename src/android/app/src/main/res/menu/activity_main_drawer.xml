@@ -9,12 +9,10 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_my_communities"
-            android:icon="@drawable/ic_menu_manage"
             android:title="My Communities"
             />
         <item
             android:id="@+id/nav_all_communities"
-            android:icon="@drawable/ic_menu_manage"
             android:title="All Communities"
             />
     </group>
@@ -28,7 +26,6 @@
                 />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_manage"
                 android:title="Logout"
                 />
         </menu>
