@@ -19,6 +19,7 @@
             android:hint="@string/user"
             android:inputType="text"
             android:maxLength="20"
+            android:maxLines="1"
             />
         <EditText
             android:id="@+id/signInEtPass1"
@@ -27,6 +28,7 @@
             android:hint="@string/password"
             android:inputType="text|textPassword"
             android:maxLength="20"
+            android:maxLines="1"
             />
         <EditText
             android:id="@+id/signInEtPass2"
@@ -35,6 +37,7 @@
             android:hint="@string/repeat_password"
             android:inputType="text|textPassword"
             android:maxLength="20"
+            android:maxLines="1"
             />
         <CheckBox
             android:id="@+id/signInCbShowPass"
