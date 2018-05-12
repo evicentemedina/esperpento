@@ -40,9 +40,9 @@
 
     Adición en '/usr/share/webapps/phppgadmin/classes/database/Connection.php':
 
-      switch (substr($version,0,4)) {
-          case '10.3': return 'Postgres'; break;
-      }
+        switch (substr($version,0,4)) {
+            case '10.3': return 'Postgres'; break;
+        }
 
     En la línea 91
 
