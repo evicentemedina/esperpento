@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,8 +35,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.getHeaderView(0);
+        TextView navHeaderUsername = headerView.findViewById(R.id.nav_header_username);
+
         username = getIntent().getStringExtra("user");
         userpass = getIntent().getStringExtra("pass");
+
+        navHeaderUsername.setText(username);
+
+        TextView testUsername = findViewById(R.id.test_username);
+        testUsername.setText(username+"\n"+userpass);
     }
 
     @Override
@@ -70,11 +80,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.nav_dummy_community) {
+        if(id == R.id.nav_my_communities) {
 
-        }else if(id == R.id.nav_share) {
+        }else if(id == R.id.nav_all_communities){
 
-        }else if(id == R.id.nav_send) {
+        }else if(id == R.id.nav_preferences) {
 
         }else if(id == R.id.nav_logout) {
             startActivity(new Intent(this, LoginActivity.class));
