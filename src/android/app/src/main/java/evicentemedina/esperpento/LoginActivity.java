@@ -68,54 +68,57 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(id == R.id.loginBtnLogin) {
+        if(id == R.id.loginBtnLogin){
             final String user = etUser.getText().toString(),
                          pass = etPass.getText().toString();
-            if(!user.isEmpty() && !pass.isEmpty()) {
+            if(!user.isEmpty() && !pass.isEmpty()){
                 final View fv = v;
                 String url = Constants.URL+"login.php?u="+user+"&p="+pass;
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    Request.Method.GET, url, null, new Response.Listener<JSONObject>(){
                         @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                if(response.getInt("s") == 1) {
+                        public void onResponse(JSONObject response){
+                            String msg = "";
+                            try{
+                                if(response.getInt("s") == 1){
                                     startActivity(new Intent(fv.getContext(), MainActivity.class)
                                             .putExtra("user", user)
                                             .putExtra("pass", pass)
                                     );
                                     finish();
-                                }else{
-                                    Snackbar.make(fv, R.string.user_or_pass_incorrect, Snackbar.LENGTH_LONG).show();
-                                }
-                            } catch (JSONException e) {
-                                Snackbar.make(fv, response.toString(), Snackbar.LENGTH_LONG).show();
+                                }else
+                                    msg = fv.getContext().getString(R.string.user_or_pass_incorrect);
+                            }catch(JSONException e){
+                                msg = response.toString();
                             }
+                            Snackbar.make(fv, msg, Snackbar.LENGTH_LONG).show();
                         }
-                    }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener(){
                         @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Snackbar.make(fv, "Error "+error.networkResponse.statusCode, Snackbar.LENGTH_LONG).show();
+                        public void onErrorResponse(VolleyError error){
+                            String msg;
+                            if(error.networkResponse != null)
+                                msg = "Error "+error.networkResponse.statusCode;
+                            else
+                                msg = "Connection error";
+                            Snackbar.make(fv, msg, Snackbar.LENGTH_LONG).show();
                         }
                     }
                 );
                 VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-            }else{
+            }else
                 Snackbar.make(v, "User or password empty", Snackbar.LENGTH_LONG).show();
-            }
-        }else if(id == R.id.loginBtnSignin) {
+        }else if(id == R.id.loginBtnSignin)
             startActivity(new Intent(v.getContext(), SignInActivity.class));
-        }
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if(isChecked){
+        if(isChecked)
             etPass.setInputType(
                     InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-        }else{
+        else
             etPass.setInputType(
                     InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        }
     }
 }

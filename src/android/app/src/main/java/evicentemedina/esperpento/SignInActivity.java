@@ -1,7 +1,6 @@
 package evicentemedina.esperpento;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -46,35 +45,44 @@ public class SignInActivity extends AppCompatActivity
     public void onClick(View v) {
         int id = v.getId();
 
-        if(id == R.id.signInBtnSignIn) {
+        if(id == R.id.signInBtnSignIn){
             final String user = etUser.getText().toString(),
                          pass1 = etPass1.getText().toString(),
                          pass2 = etPass2.getText().toString();
-            if(!user.isEmpty() && !pass1.isEmpty() && !pass2.isEmpty()) {
-                if(pass1.equals(pass2)) {
+            if(!user.isEmpty() && !pass1.isEmpty() && !pass2.isEmpty()){
+                if(pass1.equals(pass2)){
                     final View fv = v;
                     String url = Constants.URL+"signin.php?u="+user+"&p="+pass1;
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                        Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        Request.Method.GET, url, null, new Response.Listener<JSONObject>(){
                             @Override
                             public void onResponse(JSONObject response) {
-                                try {
-                                    if(response.getInt("s") == 1) {
-                                        Snackbar.make(fv, "User created", Snackbar.LENGTH_LONG).show();
+                                String msg = "";
+                                try{
+                                    if(response.getInt("s") == 1){
+                                        msg = "User created";
                                         etUser.setText("");
                                         etPass1.setText("");
                                         etPass2.setText("");
-                                    }else{
-                                        Snackbar.make(fv, "User already in use", Snackbar.LENGTH_LONG).show();
+                                    }else if(response.getInt("s") == 0){
+                                        msg = "User already in use";
+                                    }else if(response.getInt("s") == -1){
+                                        msg = "User or password too long";
                                     }
-                                } catch (JSONException e) {
-                                    Snackbar.make(fv, response.toString(), Snackbar.LENGTH_LONG).show();
+                                }catch(JSONException e){
+                                    msg = response.toString();
                                 }
+                                Snackbar.make(fv, msg, Snackbar.LENGTH_LONG).show();
                             }
-                        }, new Response.ErrorListener() {
+                        }, new Response.ErrorListener(){
                             @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Snackbar.make(fv, "Error "+error.networkResponse.statusCode, Snackbar.LENGTH_LONG).show();
+                            public void onErrorResponse(VolleyError error){
+                                String msg;
+                                if(error.networkResponse != null)
+                                    msg = "Error "+error.networkResponse.statusCode;
+                                else
+                                    msg = "Connection error";
+                                Snackbar.make(fv, msg, Snackbar.LENGTH_LONG).show();
                             }
                         }
                     );
@@ -90,7 +98,7 @@ public class SignInActivity extends AppCompatActivity
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if(isChecked) {
+        if(isChecked){
             int inputType = InputType.TYPE_CLASS_TEXT |
                     InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
             etPass1.setInputType(inputType);
