@@ -27,6 +27,7 @@ import org.json.JSONObject;
 
 import evicentemedina.esperpento.fragments.AllCommunitiesFragment;
 import evicentemedina.esperpento.fragments.HomeFragment;
+import evicentemedina.esperpento.fragments.LoadingFragment;
 import evicentemedina.esperpento.objects.Constants;
 import evicentemedina.esperpento.objects.VolleySingleton;
 
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity
         }else if(id == R.id.nav_my_communities) {
 
         }else if(id == R.id.nav_all_communities){
+            changeFragment(R.layout.fragment_loading);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, Constants.getUrlAllComm(), null,
                 new Response.Listener<JSONObject>() {
@@ -164,8 +166,11 @@ public class MainActivity extends AppCompatActivity
             case R.layout.fragment_all_communities:
                 fragment = new AllCommunitiesFragment();
                 break;
+            case R.layout.fragment_loading:
+                fragment = new LoadingFragment();
+                break;
             default:
-                fragment = new HomeFragment();
+                fragment = new LoadingFragment();
         }
         fragmentTransaction.replace(R.id.content_main, fragment);
         fragmentTransaction.commit();

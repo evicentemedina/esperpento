@@ -19,12 +19,15 @@ public class AllCommunitiesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_communities, container, false);
-        TextView textView = view.findViewById(R.id.frag_all_comm_tv);
+        View view;
         Bundle args = getArguments();
         if(args != null){
+            view = inflater.inflate(R.layout.fragment_all_communities, container, false);
+            TextView textView = view.findViewById(R.id.frag_all_comm_tv);
             String json = args.getString("json");
             textView.setText(json);
+        }else{
+            view = inflater.inflate(R.layout.fragment_empty, container, false);
         }
         return view;
     }

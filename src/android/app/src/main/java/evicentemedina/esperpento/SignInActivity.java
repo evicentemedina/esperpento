@@ -52,9 +52,8 @@ public class SignInActivity extends AppCompatActivity
             if(!user.isEmpty() && !pass1.isEmpty() && !pass2.isEmpty()){
                 if(pass1.equals(pass2)){
                     final View fv = v;
-                    String url = Constants.URL+"signin.php?u="+user+"&p="+pass1;
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                        Request.Method.GET, url, null, new Response.Listener<JSONObject>(){
+                        Request.Method.GET, Constants.getUrlSignIn(user, pass1), null, new Response.Listener<JSONObject>(){
                             @Override
                             public void onResponse(JSONObject response) {
                                 String msg = "";

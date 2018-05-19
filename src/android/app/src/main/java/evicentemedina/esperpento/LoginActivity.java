@@ -73,9 +73,8 @@ public class LoginActivity extends AppCompatActivity
                          pass = etPass.getText().toString();
             if(!user.isEmpty() && !pass.isEmpty()){
                 final View fv = v;
-                String url = Constants.URL+"login.php?u="+user+"&p="+pass;
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.GET, url, null, new Response.Listener<JSONObject>(){
+                    Request.Method.GET, Constants.getUrlLogin(user, pass), null, new Response.Listener<JSONObject>(){
                         @Override
                         public void onResponse(JSONObject response){
                             String msg = "";
