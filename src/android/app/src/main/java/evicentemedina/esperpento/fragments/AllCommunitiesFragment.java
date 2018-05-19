@@ -24,7 +24,7 @@ public class AllCommunitiesFragment extends Fragment {
         if(args != null){
             view = inflater.inflate(R.layout.fragment_all_communities, container, false);
             TextView textView = view.findViewById(R.id.frag_all_comm_tv);
-            String json = args.getString("json");
+            String json = args.getString("args");
             textView.setText(json);
         }else{
             view = inflater.inflate(R.layout.fragment_empty, container, false);

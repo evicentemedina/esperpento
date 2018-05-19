@@ -51,9 +51,11 @@ public class SignInActivity extends AppCompatActivity
                          pass2 = etPass2.getText().toString();
             if(!user.isEmpty() && !pass1.isEmpty() && !pass2.isEmpty()){
                 if(pass1.equals(pass2)){
+                    VolleySingleton.getInstance().getRequestQueue().cancelAll("cancelable");
                     final View fv = v;
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                        Request.Method.GET, Constants.getUrlSignIn(user, pass1), null, new Response.Listener<JSONObject>(){
+                        Request.Method.GET, Constants.getUrlSignIn(user, pass1), null,
+                        new Response.Listener<JSONObject>(){
                             @Override
                             public void onResponse(JSONObject response) {
                                 String msg = "";
@@ -85,7 +87,7 @@ public class SignInActivity extends AppCompatActivity
                             }
                         }
                     );
-                    VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+                    VolleySingleton.getInstance().addToRequestQueue(jsonObjectRequest);
                 }else{
                     Snackbar.make(v, "The passwords don't match", Snackbar.LENGTH_LONG).show();
                 }

@@ -72,9 +72,11 @@ public class LoginActivity extends AppCompatActivity
             final String user = etUser.getText().toString(),
                          pass = etPass.getText().toString();
             if(!user.isEmpty() && !pass.isEmpty()){
+                VolleySingleton.getInstance().getRequestQueue().cancelAll("cancelable");
                 final View fv = v;
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.GET, Constants.getUrlLogin(user, pass), null, new Response.Listener<JSONObject>(){
+                    Request.Method.GET, Constants.getUrlLogin(user, pass), null,
+                    new Response.Listener<JSONObject>(){
                         @Override
                         public void onResponse(JSONObject response){
                             String msg = "";
@@ -104,7 +106,7 @@ public class LoginActivity extends AppCompatActivity
                         }
                     }
                 );
-                VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+                VolleySingleton.getInstance().addToRequestQueue(jsonObjectRequest);
             }else
                 Snackbar.make(v, "User or password empty", Snackbar.LENGTH_LONG).show();
         }else if(id == R.id.loginBtnSignin)

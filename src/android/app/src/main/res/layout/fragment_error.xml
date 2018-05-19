@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".fragments.ErrorFragment"
     >
     <TextView
+        android:id="@+id/frag_error_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="There were no results :("
+        android:gravity="center"
+        android:text="An error occurred :("
         android:textSize="20sp"
         />
 </FrameLayout>
