@@ -1,6 +1,9 @@
 package evicentemedina.esperpento;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,10 +17,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import evicentemedina.esperpento.fragments.AllCommunitiesFragment;
+import evicentemedina.esperpento.fragments.HomeFragment;
+import evicentemedina.esperpento.objects.Constants;
+import evicentemedina.esperpento.objects.VolleySingleton;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private String username, userpass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +52,21 @@ public class MainActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         TextView navHeaderUsername = headerView.findViewById(R.id.nav_header_username);
 
-        username = getIntent().getStringExtra("user");
-        userpass = getIntent().getStringExtra("pass");
+        String username = getIntent().getStringExtra("user"),
+               userpass = getIntent().getStringExtra("pass");
 
         navHeaderUsername.setText(username);
 
-        TextView testUsername = findViewById(R.id.test_username);
-        testUsername.setText(username+"\n"+userpass);
+        if(savedInstanceState == null){
+            SharedPreferences sp = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("username", username);
+            editor.putString("userpass", userpass);
+            editor.apply();
+
+            changeFragment(R.layout.fragment_home);
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
     }
 
     @Override
@@ -80,13 +102,49 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.nav_my_communities) {
+        if(id == R.id.nav_home) {
+            changeFragment(R.layout.fragment_home);
+        }else if(id == R.id.nav_my_communities) {
 
         }else if(id == R.id.nav_all_communities){
-
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, Constants.getUrlAllComm(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try{
+                            if(response.getInt("s") == 1){
+                                Bundle args = new Bundle();
+                                args.putString("json", response.getJSONArray("c").toString());
+                                Fragment fragment = new AllCommunitiesFragment();
+                                fragment.setArguments(args);
+                                getFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.content_main, fragment)
+                                        .commit();
+                            }else
+                                changeFragment(R.layout.fragment_all_communities);
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
+            );
+            VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
         }else if(id == R.id.nav_preferences) {
 
+        }else if(id == R.id.nav_about) {
+
         }else if(id == R.id.nav_logout) {
+            SharedPreferences sp = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.clear();
+            editor.apply();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
@@ -94,5 +152,22 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void changeFragment(int layoutResource){
+        Fragment fragment;
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        switch(layoutResource){
+            case R.layout.fragment_home:
+                fragment = new HomeFragment();
+                break;
+            case R.layout.fragment_all_communities:
+                fragment = new AllCommunitiesFragment();
+                break;
+            default:
+                fragment = new HomeFragment();
+        }
+        fragmentTransaction.replace(R.id.content_main, fragment);
+        fragmentTransaction.commit();
     }
 }

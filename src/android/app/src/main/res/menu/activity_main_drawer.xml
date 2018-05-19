@@ -8,6 +8,10 @@
 -->
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            />
+        <item
             android:id="@+id/nav_my_communities"
             android:title="My Communities"
             />
@@ -23,6 +27,10 @@
                 android:id="@+id/nav_preferences"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="Preferences"
+                />
+            <item
+                android:id="@+id/nav_about"
+                android:title="About"
                 />
             <item
                 android:id="@+id/nav_logout"

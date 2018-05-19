@@ -16,4 +16,7 @@
     <string name="email">Email</string>
     <string name="logo_image">Logo image</string>
     <string name="user_or_pass_incorrect">User or password incorrect</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
