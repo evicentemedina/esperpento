@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="evicentemedina.esperpento"
     >
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:name="evicentemedina.esperpento.Esperpento"
+        android:name=".Esperpento"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        >
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -25,14 +28,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SignInActivity"
+            android:label="@string/sign_in"
+            android:parentActivityName=".LoginActivity"
+            />
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
-            android:name=".SignInActivity"
-            android:label="@string/sign_in"
-            android:parentActivityName=".LoginActivity"
+            android:name=".activities.CommNewActivity"
+            android:label="New Community"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             />
     </application>
 

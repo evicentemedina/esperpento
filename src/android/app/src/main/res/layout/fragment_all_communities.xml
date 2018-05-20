@@ -6,10 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AllCommunitiesFragment"
     >
-    <TextView
-        android:id="@+id/frag_all_comm_tv"
+    <ListView
+        android:id="@+id/frag_all_comm_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="All communities"
+        />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/frag_all_comm_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="bottom|end"
+        android:src="@android:drawable/ic_menu_add"
         />
 </FrameLayout>

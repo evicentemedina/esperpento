@@ -18,6 +18,7 @@ public final class Constants {
             HOME = "get_threads_usr_recent.php?u=%s",
             MY_COMM = "get_comm_usr.php?u=%s",
             ALL_COMM = "get_comm_all.php",
+            INS_COMM = "ins_comm.php?u=%s&p=%s&name=%s&descrip=%s",
             SUB_COMM = "sub_comm.php?u=%s&p=%s&c=%s";
 
     private static String URL = URL_DEV;
@@ -37,6 +38,7 @@ public final class Constants {
         String string = URL + stringArray[0];
         Object[] stringBuilder = new Object[stringArray.length - 1];
         for(int i = 1; i < stringArray.length; i++){
+            System.out.println("---\n"+stringArray[i]);
             try{
                 stringBuilder[i-1] = URLEncoder.encode(stringArray[i], ENC);
             }catch(UnsupportedEncodingException e){
@@ -74,6 +76,13 @@ public final class Constants {
 
     public static String getUrlAllComm() {
         return URL+ALL_COMM;
+    }
+
+    public static String getUrlInsComm(@NonNull String user, @NonNull String pass,
+                                       @NonNull String name, String descrip) {
+        if(descrip == null)
+            descrip = "";
+        return encode(INS_COMM, user, pass, name, descrip);
     }
 
     public static String getUrlSubComm(@NonNull String user, @NonNull String pass,

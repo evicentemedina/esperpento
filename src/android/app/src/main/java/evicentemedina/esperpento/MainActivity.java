@@ -59,10 +59,10 @@ public class MainActivity extends AppCompatActivity
         navHeaderUsername.setText(username);
 
         if(savedInstanceState == null){
-            SharedPreferences sp = getPreferences(MODE_PRIVATE);
+            SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putString("username", username);
-            editor.putString("userpass", userpass);
+            editor.putString("user", username);
+            editor.putString("pass", userpass);
             editor.apply();
 
             changeFragment(R.layout.fragment_home);
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity
         }else if(id == R.id.nav_about) {
 
         }else if(id == R.id.nav_logout) {
-            SharedPreferences sp = getPreferences(MODE_PRIVATE);
+            SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.clear();
             editor.apply();
