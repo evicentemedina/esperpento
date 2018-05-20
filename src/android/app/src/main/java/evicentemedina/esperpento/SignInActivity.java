@@ -34,6 +34,11 @@ public class SignInActivity extends AppCompatActivity
         etUser = findViewById(R.id.signInEtUser);
         etPass1 = findViewById(R.id.signInEtPass1);
         etPass2 = findViewById(R.id.signInEtPass2);
+
+        etUser.setFilters(Constants.INPUT_FILTER);
+        etPass1.setFilters(Constants.INPUT_FILTER);
+        etPass2.setFilters(Constants.INPUT_FILTER);
+
         CheckBox cbShowPass = findViewById(R.id.signInCbShowPass);
         Button btnSignIn = findViewById(R.id.signInBtnSignIn);
 

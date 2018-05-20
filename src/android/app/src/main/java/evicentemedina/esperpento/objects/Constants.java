@@ -1,18 +1,52 @@
 package evicentemedina.esperpento.objects;
 
+import android.support.annotation.NonNull;
+import android.text.InputFilter;
+import android.text.Spanned;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public final class Constants {
-    private static final String ENC = "UTF-8";
+    private static final String
+            ENC = "UTF-8",
+            BLOCKED_CHARS = "*",
+            URL_DEV = "http://192.168.1.2/esperpento/",
+            URL_PROD = "http://esperpento.ddns.net/esperpento/",
+            LOGIN = "login.php?u=%s&p=%s",
+            SIGNIN = "signin.php?u=%s&p=%s",
+            HOME = "get_threads_usr_recent.php?u=%s",
+            MY_COMM = "get_comm_usr.php?u=%s",
+            ALL_COMM = "get_comm_all.php",
+            SUB_COMM = "sub_comm.php?u=%s&p=%s&c=%s";
 
-    private static final String URL_DEV = "http://192.168.1.2/esperpento/";
-    private static final String URL_PROD = "http://esperpento.ddns.net/esperpento/";
     private static String URL = URL_DEV;
 
-    private static final String LOGIN = "login.php";
-    private static final String SIGNIN = "signin.php";
-    private static final String ALL_COMM = "get_comm_all.php";
+    public static final InputFilter[] INPUT_FILTER = {new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
+                                   int dstart, int dend) {
+            if(source != null && BLOCKED_CHARS.contains(("" + source)))
+                return "";
+            else
+                return null;
+        }
+    }};
+
+    private static String encode(@NonNull String... stringArray) {
+        String string = URL + stringArray[0];
+        Object[] stringBuilder = new Object[stringArray.length - 1];
+        for(int i = 1; i < stringArray.length; i++){
+            try{
+                stringBuilder[i-1] = URLEncoder.encode(stringArray[i], ENC);
+            }catch(UnsupportedEncodingException e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+        System.out.println(String.format(string, stringBuilder));
+        return String.format(string, stringBuilder);
+    }
 
     public static void toggleUrl() {
         if(URL.equals(URL_DEV)){
@@ -22,33 +56,28 @@ public final class Constants {
         }
     }
 
-    public static String getUrlLogin(String user, String pass) {
-        try{
-            return String.format(
-                    URL+LOGIN+"?u=%s&p=%s",
-                    URLEncoder.encode(user, ENC),
-                    URLEncoder.encode(pass, ENC)
-            );
-        }catch(UnsupportedEncodingException e){
-            e.printStackTrace();
-            return null;
-        }
+    public static String getUrlLogin(@NonNull String user, @NonNull String pass) {
+        return encode(LOGIN, user, pass);
     }
 
-    public static String getUrlSignIn(String user, String pass) {
-        try{
-            return String.format(
-                    URL+SIGNIN+"?u=%s&p=%s",
-                    URLEncoder.encode(user, ENC),
-                    URLEncoder.encode(pass, ENC)
-            );
-        }catch(UnsupportedEncodingException e){
-            e.printStackTrace();
-            return null;
-        }
+    public static String getUrlSignIn(@NonNull String user, @NonNull String pass) {
+        return encode(SIGNIN, user, pass);
+    }
+
+    public static String getUrlHome(@NonNull String user) {
+        return encode(HOME, user);
+    }
+
+    public static String getUrlMyComm(@NonNull String user) {
+        return encode(MY_COMM, user);
     }
 
     public static String getUrlAllComm() {
         return URL+ALL_COMM;
+    }
+
+    public static String getUrlSubComm(@NonNull String user, @NonNull String pass,
+                                       @NonNull String comm) {
+        return encode(SUB_COMM, user, pass, comm);
     }
 }
