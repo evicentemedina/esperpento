@@ -23,16 +23,21 @@ public final class Constants {
 
     private static String URL = URL_DEV;
 
-    public static final InputFilter[] INPUT_FILTER = {new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
-                                   int dstart, int dend) {
-            if(source != null && BLOCKED_CHARS.contains(("" + source)))
-                return "";
-            else
-                return null;
-        }
-    }};
+    public static InputFilter[] getInputFilters(InputFilter[] inputFilters) {
+        InputFilter[] _inputFilters = new InputFilter[inputFilters.length + 1];
+        System.arraycopy(inputFilters, 0, _inputFilters, 0, inputFilters.length);
+        _inputFilters[inputFilters.length] = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
+                                       int dstart, int dend) {
+                if (source != null && BLOCKED_CHARS.contains(("" + source)))
+                    return "";
+                else
+                    return null;
+            }
+        };
+        return _inputFilters;
+    }
 
     private static String encode(@NonNull String... stringArray) {
         String string = URL + stringArray[0];

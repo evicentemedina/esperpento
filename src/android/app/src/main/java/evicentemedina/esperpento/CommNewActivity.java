@@ -1,9 +1,9 @@
-package evicentemedina.esperpento.activities;
+package evicentemedina.esperpento;
 
-import android.support.v7.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +17,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import evicentemedina.esperpento.R;
 import evicentemedina.esperpento.objects.Constants;
 import evicentemedina.esperpento.objects.VolleySingleton;
 
 public class CommNewActivity extends AppCompatActivity implements View.OnClickListener {
-    // TODO: Activity acts weird, doesn't show Snackbars or back button & system bar is white
+
     private String user, pass;
     private EditText etName, etDescrip;
 
@@ -32,12 +31,17 @@ public class CommNewActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_comm_new);
         Toolbar toolbar = findViewById(R.id.toolbar_comm_new);
         setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         etName = findViewById(R.id.comm_new_name);
         etDescrip = findViewById(R.id.comm_new_descrip);
 
-        etName.setFilters(Constants.INPUT_FILTER);
-        etDescrip.setFilters(Constants.INPUT_FILTER);
+        etName.setFilters(Constants.getInputFilters(etName.getFilters()));
+        etDescrip.setFilters(Constants.getInputFilters(etDescrip.getFilters()));
 
         Button btnCreate = findViewById(R.id.comm_new_create);
         btnCreate.setOnClickListener(this);

@@ -37,8 +37,8 @@ public class LoginActivity extends AppCompatActivity
         etUser = findViewById(R.id.loginEtUser);
         etPass = findViewById(R.id.loginEtPass);
 
-        etUser.setFilters(Constants.INPUT_FILTER);
-        etPass.setFilters(Constants.INPUT_FILTER);
+        etUser.setFilters(Constants.getInputFilters(etUser.getFilters()));
+        etPass.setFilters(Constants.getInputFilters(etPass.getFilters()));
 
         CheckBox cbShowPass = findViewById(R.id.loginCbShowPass);
         Button btnLogin = findViewById(R.id.loginBtnLogin),

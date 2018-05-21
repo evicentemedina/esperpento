@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import evicentemedina.esperpento.R;
-import evicentemedina.esperpento.activities.CommNewActivity;
+import evicentemedina.esperpento.CommNewActivity;
 
 public class AllCommunitiesFragment extends Fragment implements View.OnClickListener {
 
