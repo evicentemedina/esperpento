@@ -20,39 +20,44 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             />
     </android.support.design.widget.AppBarLayout>
-    <LinearLayout
+    <ScrollView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-        <EditText
-            android:id="@+id/comm_new_name"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:inputType="text"
-            android:maxLength="25"
-            android:maxLines="1"
-            />
-        <EditText
-            android:id="@+id/comm_new_descrip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Description"
-            android:inputType="text|textCapSentences"
-            android:maxLength="255"
-            />
-        <Button
-            android:id="@+id/comm_new_create"
-            style="@android:style/Widget.Holo.Button"
-            android:backgroundTint="@color/colorAccent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:layout_gravity="end"
-            android:text="Create"
-            />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="16dp">
+            <EditText
+                android:id="@+id/comm_new_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="text|textCapWords"
+                android:maxLength="25"
+                android:maxLines="1"
+                />
+            <EditText
+                android:id="@+id/comm_new_descrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:inputType="text|textCapSentences|textMultiLine"
+                android:maxLength="255"
+                />
+            <Button
+                android:id="@+id/comm_new_create"
+                style="@android:style/Widget.Holo.Button"
+                android:backgroundTint="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_gravity="end"
+                android:text="Create"
+                />
+        </LinearLayout>
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

@@ -19,6 +19,9 @@ public final class Constants {
             MY_COMM = "get_comm_usr.php?u=%s",
             ALL_COMM = "get_comm_all.php",
             INS_COMM = "ins_comm.php?u=%s&p=%s&name=%s&descrip=%s",
+            IS_USR_SUB = "is_usr_sub_comm.php?u=%s&c=%s",
+            GET_SUBS_COMM = "get_subs_comm.php?c=%s",
+            GET_THREADS_COMM = "get_threads_comm_recent.php?c=%s",
             SUB_COMM = "sub_comm.php?u=%s&p=%s&c=%s";
 
     private static String URL = URL_DEV;
@@ -88,6 +91,18 @@ public final class Constants {
         if(descrip == null)
             descrip = "";
         return encode(INS_COMM, user, pass, name, descrip);
+    }
+
+    public static String getUrlIsUsrSub(@NonNull String user, @NonNull String community) {
+        return encode(IS_USR_SUB, user, community);
+    }
+
+    public static String getUrlGetSubsComm(@NonNull String community) {
+        return encode(GET_SUBS_COMM, community);
+    }
+
+    public static String getUrlGetThreadsComm(@NonNull String community) {
+        return encode(GET_THREADS_COMM, community);
     }
 
     public static String getUrlSubComm(@NonNull String user, @NonNull String pass,

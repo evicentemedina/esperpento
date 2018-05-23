@@ -2,7 +2,7 @@
 if(isset($_GET['u'])){
   include 'conn.php';
   $sql = <<<SQL
-    select * from threads where community in(
+    select id,title,"time",votes,community,user from threads where community in(
       select community from users_communities where "user"=$1
     ) order by "time" desc limit 50
 SQL;

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/listview_threads_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title_______________________________________________________________________________________________"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/listview_threads_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="Time"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="by "
+            />
+        <TextView
+            android:id="@+id/listview_threads_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User_____________________"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" on "
+            />
+        <TextView
+            android:id="@+id/listview_threads_comm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Community________________"
+            />
+    </LinearLayout>
+</LinearLayout>
