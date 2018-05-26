@@ -44,6 +44,10 @@
             android:label="Community Detail"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ThreadDetailActivity"
+            android:label="Thread Detail"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

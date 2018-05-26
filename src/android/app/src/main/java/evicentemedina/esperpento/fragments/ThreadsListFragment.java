@@ -1,5 +1,6 @@
 package evicentemedina.esperpento.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
@@ -16,8 +17,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import evicentemedina.esperpento.R;
+import evicentemedina.esperpento.ThreadDetailActivity;
 
 public class ThreadsListFragment extends Fragment {
+
+    private JSONArray items;
 
     public ThreadsListFragment() {
         // Required empty public constructor
@@ -31,13 +35,18 @@ public class ThreadsListFragment extends Fragment {
         if (args != null) {
             view = inflater.inflate(R.layout.fragment_threads_list, container, false);
             try {
-                JSONArray items = new JSONArray(args.getString("args"));
+                items = new JSONArray(args.getString("args"));
                 ListView listView = view.findViewById(R.id.frag_threads_list_lv);
                 listView.setAdapter(new ListViewAdapter(items));
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // TODO: Thread detail
+                        try {
+                            startActivity(new Intent(parent.getContext(), ThreadDetailActivity.class)
+                                    .putExtra("json", items.getJSONObject(position).toString()));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             } catch (JSONException e) {

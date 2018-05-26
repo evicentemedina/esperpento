@@ -22,7 +22,10 @@ public final class Constants {
             IS_USR_SUB = "is_usr_sub_comm.php?u=%s&c=%s",
             GET_SUBS_COMM = "get_subs_comm.php?c=%s",
             GET_THREADS_COMM = "get_threads_comm_recent.php?c=%s",
-            SUB_COMM = "sub_comm.php?u=%s&p=%s&c=%s";
+            SUB_COMM = "sub_comm.php?u=%s&p=%s&c=%s",
+            GET_VOTE_USR_THREAD = "get_vote_usr_thread.php?u=%s&t=%s",
+            GET_VOTES_THREAD = "get_votes_thread.php?t=%s",
+            GET_THREAD_CONTENT = "get_thread_content.php?t=%s";
 
     private static String URL = URL_DEV;
 
@@ -45,11 +48,11 @@ public final class Constants {
     private static String encode(@NonNull String... stringArray) {
         String string = URL + stringArray[0];
         Object[] stringBuilder = new Object[stringArray.length - 1];
-        for(int i = 1; i < stringArray.length; i++){
+        for (int i = 1; i < stringArray.length; i++) {
             System.out.println("---\n"+stringArray[i]);
-            try{
+            try {
                 stringBuilder[i-1] = URLEncoder.encode(stringArray[i], ENC);
-            }catch(UnsupportedEncodingException e){
+            } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -59,9 +62,9 @@ public final class Constants {
     }
 
     public static void toggleUrl() {
-        if(URL.equals(URL_DEV)){
+        if (URL.equals(URL_DEV)) {
             URL = URL_PROD;
-        }else{
+        } else {
             URL = URL_DEV;
         }
     }
@@ -108,5 +111,17 @@ public final class Constants {
     public static String getUrlSubComm(@NonNull String user, @NonNull String pass,
                                        @NonNull String comm) {
         return encode(SUB_COMM, user, pass, comm);
+    }
+
+    public static String getUrlGetVoteUsrThread(@NonNull String user, int thread) {
+        return encode(GET_VOTE_USR_THREAD, user, thread+"");
+    }
+
+    public static String getUrlGetVotesThread(int thread) {
+        return encode(GET_VOTES_THREAD, thread+"");
+    }
+
+    public static String getUrlGetThreadContent(int thread) {
+        return encode(GET_THREAD_CONTENT, thread+"");
     }
 }
