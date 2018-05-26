@@ -19,8 +19,6 @@ import evicentemedina.esperpento.R;
 
 public class ThreadsListFragment extends Fragment {
 
-    private JSONArray items;
-
     public ThreadsListFragment() {
         // Required empty public constructor
     }
@@ -33,7 +31,7 @@ public class ThreadsListFragment extends Fragment {
         if (args != null) {
             view = inflater.inflate(R.layout.fragment_threads_list, container, false);
             try {
-                items = new JSONArray(args.getString("args"));
+                JSONArray items = new JSONArray(args.getString("args"));
                 ListView listView = view.findViewById(R.id.frag_threads_list_lv);
                 listView.setAdapter(new ListViewAdapter(items));
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,9 +71,9 @@ public class ThreadsListFragment extends Fragment {
 
         @Override
         public Object getItem(int position) {
-            try{
+            try {
                 return items.getJSONObject(position);
-            }catch(JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -83,9 +81,9 @@ public class ThreadsListFragment extends Fragment {
 
         @Override
         public long getItemId(int position) {
-            try{
+            try {
                 return items.getJSONObject(position).getInt("id");
-            }catch(JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
                 return -1;
             }
@@ -98,15 +96,19 @@ public class ThreadsListFragment extends Fragment {
                         .inflate(R.layout.listview_threads, parent, false);
             }
             TextView title = convertView.findViewById(R.id.listview_threads_title),
-                     time = convertView.findViewById(R.id.listview_threads_time),
                      user = convertView.findViewById(R.id.listview_threads_user),
-                     comm = convertView.findViewById(R.id.listview_threads_comm);
+                     comm = convertView.findViewById(R.id.listview_threads_comm),
+                     votes = convertView.findViewById(R.id.listview_threads_votes),
+                     comments = convertView.findViewById(R.id.listview_threads_comments),
+                     time = convertView.findViewById(R.id.listview_threads_time);
             try {
                 JSONObject item = items.getJSONObject(position);
                 title.setText(item.getString("title"));
-                time.setText(item.getString("time").split("[.]")[0]);
                 user.setText(item.getString("user"));
                 comm.setText(item.getString("community"));
+                votes.setText(String.format("%s Votes", item.getString("votes")));
+                comments.setText(String.format("%s Comments", item.getString("comments")));
+                time.setText(item.getString("time").split("[.]")[0]);
             } catch(JSONException e) {
                 e.printStackTrace();
             }

@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/listview_comm_layout"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:padding="16dp"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
     >
     <ImageView
         android:id="@+id/listview_comm_icon"
@@ -18,23 +18,30 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+        <TextView
+            android:id="@+id/listview_comm_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="20sp"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/listview_comm_name"
+                android:id="@+id/listview_comm_threads"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Name"
-                android:textSize="20sp"
+                android:text="Threads"
                 />
             <TextView
-                android:id="@+id/listview_comm_admin"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="Admin"
+                android:id="@+id/listview_comm_subs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Subscriptors"
                 />
         </LinearLayout>
         <TextView

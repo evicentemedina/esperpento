@@ -1,6 +1,7 @@
 package evicentemedina.esperpento;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -86,10 +87,13 @@ public class LoginActivity extends AppCompatActivity
                             String msg = "";
                             try{
                                 if(response.getInt("s") == 1){
-                                    startActivity(new Intent(fv.getContext(), MainActivity.class)
-                                            .putExtra("user", user)
-                                            .putExtra("pass", pass)
-                                    );
+                                    SharedPreferences.Editor editor =
+                                            getSharedPreferences("user", MODE_PRIVATE).edit();
+                                    editor.putString("user", user);
+                                    editor.putString("pass", user);
+                                    editor.apply();
+
+                                    startActivity(new Intent(fv.getContext(), MainActivity.class));
                                     finish();
                                 }else
                                     msg = fv.getContext().getString(R.string.user_or_pass_incorrect);

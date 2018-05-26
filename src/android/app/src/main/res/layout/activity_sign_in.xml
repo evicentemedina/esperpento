@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/user"
             android:inputType="text"
-            android:maxLength="25"
+            android:maxLength="20"
             android:maxLines="1"
             />
         <EditText
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:inputType="text|textPassword"
-            android:maxLength="50"
+            android:maxLength="20"
             android:maxLines="1"
             />
         <EditText
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/repeat_password"
             android:inputType="text|textPassword"
-            android:maxLength="50"
+            android:maxLength="20"
             android:maxLines="1"
             />
         <CheckBox

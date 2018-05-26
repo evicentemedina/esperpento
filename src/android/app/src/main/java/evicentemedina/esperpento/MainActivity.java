@@ -26,13 +26,15 @@ import org.json.JSONObject;
 
 import evicentemedina.esperpento.fragments.AllCommunitiesFragment;
 import evicentemedina.esperpento.fragments.ErrorFragment;
-import evicentemedina.esperpento.fragments.HomeFragment;
 import evicentemedina.esperpento.fragments.LoadingFragment;
+import evicentemedina.esperpento.fragments.ThreadsListFragment;
 import evicentemedina.esperpento.objects.Constants;
 import evicentemedina.esperpento.objects.VolleySingleton;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +52,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        user = getSharedPreferences("user", MODE_PRIVATE).getString("user", "");
+
         View headerView = navigationView.getHeaderView(0);
         TextView navHeaderUsername = headerView.findViewById(R.id.nav_header_username);
 
-        String username = getIntent().getStringExtra("user"),
-               userpass = getIntent().getStringExtra("pass");
+        navHeaderUsername.setText(user);
 
-        navHeaderUsername.setText(username);
-
-        if(savedInstanceState == null){
-            SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("user", username);
-            editor.putString("pass", userpass);
-            editor.apply();
-
-            changeFragment(R.layout.fragment_home);
+        if (savedInstanceState == null) {
+            loadHome();
             navigationView.setCheckedItem(R.id.nav_home);
         }
     }
@@ -105,47 +100,74 @@ public class MainActivity extends AppCompatActivity
 
         VolleySingleton.getInstance().getRequestQueue().cancelAll("cancelable");
 
-        if(id == R.id.nav_home) {
-            changeFragment(R.layout.fragment_home);
-        }else if(id == R.id.nav_my_communities) {
-
-        }else if(id == R.id.nav_all_communities){
+        if (id == R.id.nav_home) {
+            loadHome();
+        } else if (id == R.id.nav_my_communities) {
             changeFragment(R.layout.fragment_loading);
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
+                    Request.Method.GET, Constants.getUrlMyComm(user), null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.getInt("s") == 1) {
+                                    changeFragment(R.layout.fragment_all_communities,
+                                            response.getJSONArray("c").toString());
+                                } else
+                                    changeFragment(R.layout.fragment_all_communities);
+                            } catch (JSONException e) {
+                                changeFragment(R.layout.fragment_error, "Bad response");
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    String msg;
+                    if (error.networkResponse != null)
+                        msg = "Error "+error.networkResponse.statusCode;
+                    else
+                        msg = "Connection error";
+                    changeFragment(R.layout.fragment_error, msg);
+                }
+            }
+            ));
+        } else if (id == R.id.nav_all_communities) {
+            changeFragment(R.layout.fragment_loading);
+            VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
                 Request.Method.GET, Constants.getUrlAllComm(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try{
-                            if(response.getInt("s") == 1){
+                        try {
+                            if (response.getInt("s") == 1) {
                                 changeFragment(R.layout.fragment_all_communities,
                                         response.getJSONArray("c").toString());
-                            }else
+                            } else
                                 changeFragment(R.layout.fragment_all_communities);
-                        }catch(JSONException e){
+                        } catch (JSONException e) {
                             changeFragment(R.layout.fragment_error, "Bad response");
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
                         String msg;
-                        if(error.networkResponse != null)
+                        if (error.networkResponse != null)
                             msg = "Error "+error.networkResponse.statusCode;
                         else
                             msg = "Connection error";
                         changeFragment(R.layout.fragment_error, msg);
                     }
                 }
-            );
-            VolleySingleton.getInstance().addToRequestQueue(jsonObjectRequest);
-        }else if(id == R.id.nav_preferences) {
+            ));
+        } else if (id == R.id.nav_preferences) {
 
-        }else if(id == R.id.nav_about) {
+        } else if (id == R.id.nav_about) {
 
-        }else if(id == R.id.nav_logout) {
-            SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
+        } else if (id == R.id.nav_logout) {
+            SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
             editor.clear();
             editor.apply();
             startActivity(new Intent(this, LoginActivity.class));
@@ -163,9 +185,9 @@ public class MainActivity extends AppCompatActivity
 
     private void changeFragment(int layoutResource, String arguments) {
         Fragment fragment;
-        switch(layoutResource){
-            case R.layout.fragment_home:
-                fragment = new HomeFragment();
+        switch (layoutResource) {
+            case R.layout.fragment_threads_list:
+                fragment = new ThreadsListFragment();
                 break;
             case R.layout.fragment_all_communities:
                 fragment = new AllCommunitiesFragment();
@@ -179,11 +201,44 @@ public class MainActivity extends AppCompatActivity
             default:
                 fragment = new ErrorFragment();
         }
-        if(arguments != null){
+        if (arguments != null) {
             Bundle args = new Bundle();
             args.putString("args", arguments);
             fragment.setArguments(args);
         }
         getFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
+    private void loadHome() {
+        changeFragment(R.layout.fragment_loading);
+        VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
+            Request.Method.GET, Constants.getUrlHome(user), null,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getInt("s") == 1) {
+                            changeFragment(R.layout.fragment_threads_list,
+                                    response.getJSONArray("c").toString());
+                        } else
+                            changeFragment(R.layout.fragment_threads_list);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        changeFragment(R.layout.fragment_error, "Bad response");
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    String msg;
+                    if (error.networkResponse != null)
+                        msg = "Error "+error.networkResponse.statusCode;
+                    else
+                        msg = "Connection error";
+                    changeFragment(R.layout.fragment_error, msg);
+                }
+            }
+        ));
     }
 }
