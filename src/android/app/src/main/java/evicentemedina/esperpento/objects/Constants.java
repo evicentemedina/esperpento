@@ -25,7 +25,8 @@ public final class Constants {
             SUB_COMM = "sub_comm.php?u=%s&p=%s&c=%s",
             GET_VOTE_USR_THREAD = "get_vote_usr_thread.php?u=%s&t=%s",
             GET_VOTES_THREAD = "get_votes_thread.php?t=%s",
-            GET_THREAD_CONTENT = "get_thread_content.php?t=%s";
+            GET_THREAD_CONTENT = "get_thread_content.php?t=%s",
+            INS_VOTE_THREAD = "ins_vote_thread.php?u=%s&p=%s&t=%s&v=%s";
 
     private static String URL = URL_DEV;
 
@@ -123,5 +124,10 @@ public final class Constants {
 
     public static String getUrlGetThreadContent(int thread) {
         return encode(GET_THREAD_CONTENT, thread+"");
+    }
+
+    public static String getUrlInsVoteThread(@NonNull String user, @NonNull String pass, int thread,
+                                             int vote) {
+        return encode(INS_VOTE_THREAD, user, pass, thread+"", vote+"");
     }
 }

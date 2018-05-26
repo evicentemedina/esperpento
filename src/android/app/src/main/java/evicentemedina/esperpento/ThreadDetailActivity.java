@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +19,7 @@ import org.json.JSONObject;
 import evicentemedina.esperpento.objects.Constants;
 import evicentemedina.esperpento.objects.VolleySingleton;
 
-public class ThreadDetailActivity extends AppCompatActivity {
+public class ThreadDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String user, pass;
     private int threadId, vote = -1;
@@ -110,6 +111,9 @@ public class ThreadDetailActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        ivUpvote.setOnClickListener(this);
+        ivDownvote.setOnClickListener(this);
     }
 
     private void refreshVote() {
@@ -144,5 +148,40 @@ public class ThreadDetailActivity extends AppCompatActivity {
                 }
             }
         ));
+    }
+
+    private void castVote(final int _vote) {
+        VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
+            Request.Method.GET, Constants.getUrlInsVoteThread(user, pass, threadId, _vote), null,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getInt("s") == 1) {
+                            vote = _vote;
+                            refreshVote();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            }
+        ));
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.thread_detail_upvote) {
+            if (vote == 1) castVote(-1);
+            else castVote(1);
+        } else if (v.getId() == R.id.thread_detail_downvote) {
+            if (vote == 0) castVote(-1);
+            else castVote(0);
+        }
     }
 }
