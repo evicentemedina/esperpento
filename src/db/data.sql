@@ -175,6 +175,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut velit semper, 
     'AAtest_community mwmwmwmw',
     'admin'
   );
-/*
+
 insert into "comments" ("content", "thread", "user") values
-*/
+  (
+    'Comentario de prueba 1',
+    1,
+    'admin'
+  );
+
+insert into "votes_threads" values
+  ('admin', 1, true);

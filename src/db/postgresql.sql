@@ -22,7 +22,6 @@ create table "threads" (
   "title"     varchar(100)  not null,
   "content"   varchar(2500) not null,
   "time"      timestamp     not null    default       current_timestamp,
-  "votes"     integer       not null    default       0,
   "edited"    timestamp     null        default       null,
   "community" varchar(25)   not null    references    "communities"
                             on delete   cascade,
@@ -33,7 +32,6 @@ create table "comments" (
   "id"        serial        primary key,
   "content"   varchar(1000) not null,
   "time"      timestamp     not null    default       current_timestamp,
-  "votes"     integer       not null    default       0,
   "edited"    timestamp     null        default       null,
   "parent"    integer       null        default       null
                             references  "comments"    on delete cascade,
