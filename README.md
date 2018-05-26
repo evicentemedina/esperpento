@@ -56,6 +56,12 @@
   permisos de conexión; no puede alterarla, eliminarla, ni crear bases de datos
   nuevas.
 
+  Para que el usuario 'esperpento' pueda insertar registros en las tablas que
+  tienen como clave primaria un campo tipo 'serial' (autoincremental propio de
+  PostgreSQL) es necesario darle permiso para ello usando el comando:
+
+      GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO esperpento
+
 
 ## Servidor de Interacción Base de Datos-Clientes
 
