@@ -2,9 +2,13 @@
 if(isset($_GET['u'])){
   include 'conn.php';
   $sql = <<<SQL
-    select * from communities where community in(
+    select name,descrip,"time",icon,color,bg_color,admin,(
+      select count(community) as threads from threads where community=name
+    ),(
+      select count(community) as subs from users_communities where community=name
+    ) from communities where name in(
       select community from users_communities where "user"=$1
-    )
+    ) order by subs desc
 SQL;
   $res = pg_query_params($con, $sql, array($_GET['u']));
   if(pg_num_rows($res) > 0){
