@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,6 +55,13 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
         user = sp.getString("user", "");
         pass = sp.getString("user", "");
 
+        loadContent();
+
+        ivUpvote.setOnClickListener(this);
+        ivDownvote.setOnClickListener(this);
+    }
+
+    private void loadContent() {
         try {
             JSONObject jsonObject = new JSONObject(getIntent().getStringExtra("json"));
             threadId = jsonObject.getInt("id");
@@ -61,7 +69,8 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
             tvUser.setText(jsonObject.getString("user"));
             tvComm.setText(jsonObject.getString("community"));
             tvVotes.setText(jsonObject.getString("votes"));
-            tvComments.setText(String.format("%s Comments", jsonObject.getString("comments")));
+            tvComments.setText(String.format("%s %s", jsonObject.getString("comments"),
+                    "Comments"));
             tvTime.setText(jsonObject.getString("time").split("[.]")[0]);
 
             VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
@@ -112,9 +121,26 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
-        ivUpvote.setOnClickListener(this);
-        ivDownvote.setOnClickListener(this);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_refresh:
+                loadContent();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void refreshVote() {
@@ -183,17 +209,6 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
         } else if (v.getId() == R.id.thread_detail_downvote) {
             if (vote == 0) castVote(-1);
             else castVote(0);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

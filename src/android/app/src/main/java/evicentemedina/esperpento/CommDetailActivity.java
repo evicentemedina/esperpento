@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
@@ -29,7 +30,7 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
 
     private String username, userpass, comm;
 
-    private TextView tvSubscriptors, tvSubscribe;
+    private TextView tvName, tvAdmin, tvThreads, tvTime, tvDescrip, tvSubscriptors, tvSubscribe;
     private Switch swSub;
 
     @Override
@@ -44,11 +45,11 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        TextView tvName = findViewById(R.id.comm_detail_name),
-                 tvAdmin = findViewById(R.id.comm_detail_admin),
-                 tvThreads = findViewById(R.id.comm_detail_threads),
-                 tvTime = findViewById(R.id.comm_detail_time),
-                 tvDescrip = findViewById(R.id.comm_detail_descrip);
+        tvName = findViewById(R.id.comm_detail_name);
+        tvAdmin = findViewById(R.id.comm_detail_admin);
+        tvThreads = findViewById(R.id.comm_detail_threads);
+        tvTime = findViewById(R.id.comm_detail_time);
+        tvDescrip = findViewById(R.id.comm_detail_descrip);
         tvSubscriptors = findViewById(R.id.comm_detail_subscriptors);
         tvSubscribe = findViewById(R.id.comm_detail_sub_tv);
         swSub = findViewById(R.id.comm_detail_sub_sw);
@@ -57,6 +58,12 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
         username = sp.getString("user", "");
         userpass = sp.getString("pass", "");
 
+        loadContent();
+
+        swSub.setOnClickListener(this);
+    }
+
+    private void loadContent() {
         Fragment fragment = new LoadingFragment();
         getFragmentManager().beginTransaction().replace(R.id.comm_detail_framelayout, fragment)
                 .commit();
@@ -68,12 +75,12 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
             getSharedPreferences("comm", MODE_PRIVATE).edit().putString("comm", comm).apply();
 
             tvName.setText(comm);
-            tvAdmin.setText(String.format("%s%s", tvAdmin.getText(), jsonObject.getString("admin")));
+            tvAdmin.setText(String.format("%s %s", "Admin:", jsonObject.getString("admin")));
             tvThreads.setText(String.format("%s %s", jsonObject.getString("threads"),
-                    tvThreads.getText().toString()));
+                    "Threads"));
             tvTime.setText(jsonObject.getString("time").split("[.]")[0]);
             tvSubscriptors.setText(String.format("%s %s", jsonObject.getString("subs"),
-                    tvSubscriptors.getText().toString()));
+                    "Subscriptors"));
             tvDescrip.setText(jsonObject.getString("descrip"));
 
             VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
@@ -136,8 +143,26 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
             getFragmentManager().beginTransaction()
                     .replace(R.id.comm_detail_framelayout, fragment).commit();
         }
+    }
 
-        swSub.setOnClickListener(this);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_refresh:
+                loadContent();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -176,11 +201,11 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
                                             }
                                         }
                                     }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        error.printStackTrace();
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            error.printStackTrace();
+                                        }
                                     }
-                                }
                                 ));
                             } else {
                                 msg = "Error";
@@ -208,17 +233,6 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
                     }
                 }
             ));
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }
