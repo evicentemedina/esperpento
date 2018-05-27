@@ -2,6 +2,7 @@ package evicentemedina.esperpento;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -34,8 +36,9 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
     private int threadId, vote = -1;
 
     private TextView tvTitle, tvUser, tvComm, tvContent, tvVotes, tvComments, tvTime;
-    private ImageView ivUpvote, ivDownvote;
+    private ImageView ivUpvote, ivDownvote, ivSend;
     private ListView listView;
+    private EditText etComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
         ivUpvote = findViewById(R.id.thread_detail_upvote);
         ivDownvote = findViewById(R.id.thread_detail_downvote);
         listView = findViewById(R.id.thread_detail_listview);
+        etComment = findViewById(R.id.thread_detail_comment_write);
+        ivSend = findViewById(R.id.thread_detail_comment_send);
 
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
         user = sp.getString("user", "");
@@ -68,6 +73,7 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
 
         ivUpvote.setOnClickListener(this);
         ivDownvote.setOnClickListener(this);
+        ivSend.setOnClickListener(this);
     }
 
     private void loadContent() {
@@ -237,13 +243,47 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         if (v.getId() == R.id.thread_detail_upvote) {
             if (vote == 1) castVote(-1);
             else castVote(1);
         } else if (v.getId() == R.id.thread_detail_downvote) {
             if (vote == 0) castVote(-1);
             else castVote(0);
+        } else if (v.getId() == R.id.thread_detail_comment_send) {
+            String comment = etComment.getText().toString();
+            if (!comment.isEmpty()) {
+                VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
+                    Request.Method.GET, Constants.getUrlInsComment(user, pass, threadId, comment),
+                    null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            String msg = null;
+                            try {
+                                if (response.getInt("s") == 1) {
+                                    etComment.setText("");
+                                    loadComments();
+                                } else msg = "Error creating comment";
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                msg = "Bad response";
+                            }
+                            if (msg != null) Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            String msg;
+                            if (error.networkResponse != null)
+                                msg = "Error " + error.networkResponse.statusCode;
+                            else
+                                msg = "Connection error";
+                            Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                ));
+            }
         }
     }
 
@@ -290,6 +330,21 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
                      user = convertView.findViewById(R.id.listview_comments_user),
                      time = convertView.findViewById(R.id.listview_comments_time),
                      content = convertView.findViewById(R.id.listview_comments_content);
+
+            // TODO: Comment votes
+            /*
+            ImageView upvote = convertView.findViewById(R.id.listview_comments_upvote),
+                      downvote = convertView.findViewById(R.id.listview_comments_downvote);
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            };
+            upvote.setOnClickListener(onClickListener);
+            downvote.setOnClickListener(onClickListener);
+            */
+
             try {
                 JSONObject item = items.getJSONObject(position);
                 votes.setText(item.getString("votes"));
@@ -301,6 +356,7 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
             }
             return convertView;
         }
+
     }
 
     private static void setListViewDynamicHeight(ListView listView) {
