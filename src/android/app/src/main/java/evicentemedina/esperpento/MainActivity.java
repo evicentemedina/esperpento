@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
             editor.clear();
-            editor.apply();
+            editor.commit();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }

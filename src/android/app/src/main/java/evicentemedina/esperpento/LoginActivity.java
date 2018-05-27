@@ -48,6 +48,10 @@ public class LoginActivity extends AppCompatActivity
         cbShowPass.setOnCheckedChangeListener(this);
         btnLogin.setOnClickListener(this);
         btnSignin.setOnClickListener(this);
+
+        if (savedInstanceState == null) {
+            getSharedPreferences("user", MODE_PRIVATE).edit().clear().apply();
+        }
     }
 
     @Override
@@ -90,8 +94,8 @@ public class LoginActivity extends AppCompatActivity
                                     SharedPreferences.Editor editor =
                                             getSharedPreferences("user", MODE_PRIVATE).edit();
                                     editor.putString("user", user);
-                                    editor.putString("pass", user);
-                                    editor.apply();
+                                    editor.putString("pass", pass);
+                                    editor.commit();
 
                                     startActivity(new Intent(fv.getContext(), MainActivity.class));
                                     finish();

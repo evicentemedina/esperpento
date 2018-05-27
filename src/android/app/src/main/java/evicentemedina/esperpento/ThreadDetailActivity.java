@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -67,7 +68,7 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
 
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
         user = sp.getString("user", "");
-        pass = sp.getString("user", "");
+        pass = sp.getString("pass", "");
 
         loadContent();
 
@@ -142,7 +143,7 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
 
     private void loadComments() {
         VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
-            Request.Method.GET, Constants.getUrlGetThreadComments(threadId), null,
+            Request.Method.GET, Constants.getUrlGetThreadComments(threadId, user), null,
             new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -150,6 +151,52 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
                         if (response.getInt("s") == 1) {
                             listView.setAdapter(new ListViewAdapter(response.getJSONArray("c")));
                             setListViewDynamicHeight(listView);
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    final ImageView upvote = view.findViewById(R.id.listview_comments_upvote);
+                                    final ImageView downvote = view.findViewById(R.id.listview_comments_downvote);
+                                    final TextView votes = view.findViewById(R.id.listview_comments_votes);
+                                    VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
+                                        Request.Method.GET, Constants.getUrlInsVoteComment(user, pass, id), null,
+                                        new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try {
+                                                    if (response.getInt("s") == 1) {
+                                                        int _votes = Integer.parseInt(votes.getText().toString());
+                                                        switch (response.getInt("c")) {
+                                                            case 1:
+                                                                upvote.setImageDrawable(getDrawable(R.drawable.ic_arrow_upward_active));
+                                                                downvote.setImageDrawable(getDrawable(R.drawable.ic_arrow_downward));
+                                                                _votes++;
+                                                                break;
+                                                            case 0:
+                                                                upvote.setImageDrawable(getDrawable(R.drawable.ic_arrow_upward));
+                                                                downvote.setImageDrawable(getDrawable(R.drawable.ic_arrow_downward_active));
+                                                                _votes = _votes-2;
+                                                                break;
+                                                            case -1:
+                                                                upvote.setImageDrawable(getDrawable(R.drawable.ic_arrow_upward));
+                                                                downvote.setImageDrawable(getDrawable(R.drawable.ic_arrow_downward));
+                                                                _votes++;
+                                                                break;
+                                                        }
+                                                        votes.setText(_votes+"");
+                                                    }
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                error.printStackTrace();
+                                            }
+                                        }
+                                    ));
+                                }
+                            });
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -331,19 +378,8 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
                      time = convertView.findViewById(R.id.listview_comments_time),
                      content = convertView.findViewById(R.id.listview_comments_content);
 
-            // TODO: Comment votes
-            /*
             ImageView upvote = convertView.findViewById(R.id.listview_comments_upvote),
                       downvote = convertView.findViewById(R.id.listview_comments_downvote);
-            View.OnClickListener onClickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            };
-            upvote.setOnClickListener(onClickListener);
-            downvote.setOnClickListener(onClickListener);
-            */
 
             try {
                 JSONObject item = items.getJSONObject(position);
@@ -351,6 +387,15 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
                 user.setText(item.getString("user"));
                 time.setText(item.getString("time").split("[.]")[0]);
                 content.setText(item.getString("content"));
+
+                switch (item.getString("vote")) {
+                    case "t":
+                        upvote.setImageDrawable(getDrawable(R.drawable.ic_arrow_upward_active));
+                        break;
+                    case "f":
+                        downvote.setImageDrawable(getDrawable(R.drawable.ic_arrow_downward_active));
+                        break;
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -28,9 +28,9 @@ public final class Constants {
             GET_THREAD_CONTENT = "get_thread_content.php?t=%s",
             INS_VOTE_THREAD = "ins_vote_thread.php?u=%s&p=%s&t=%s&v=%s",
             INS_THREAD = "ins_thread.php?u=%s&p=%s&comm=%s&t=%s&c=%s",
-            GET_THREAD_COMMENTS = "get_thread_comments.php?t=%s",
+            GET_THREAD_COMMENTS = "get_thread_comments.php?t=%s&u=%s",
             INS_COMMENT = "ins_comment.php?u=%s&p=%s&t=%s&c=%s",
-            INS_VOTE_COMMENT = "ins_vote_comment.php?u=%s&p=%s&c=%s&v=%s";
+            INS_VOTE_COMMENT = "ins_vote_comment.php?u=%s&p=%s&c=%s";
 
     private static String URL = URL_DEV;
 
@@ -141,8 +141,8 @@ public final class Constants {
         return encode(INS_THREAD, user, pass, community, title, content);
     }
 
-    public static String getUrlGetThreadComments(int thread) {
-        return encode(GET_THREAD_COMMENTS, thread+"");
+    public static String getUrlGetThreadComments(int thread, @NonNull String user) {
+        return encode(GET_THREAD_COMMENTS, thread+"", user);
     }
 
     public static String getUrlInsComment(@NonNull String user, @NonNull String pass, int thread,
@@ -151,7 +151,7 @@ public final class Constants {
     }
 
     public static String getUrlInsVoteComment(@NonNull String user, @NonNull String pass,
-                                              int comment, int vote) {
-        return encode(INS_VOTE_COMMENT, user, pass, comment+"", vote+"");
+                                              long comment) {
+        return encode(INS_VOTE_COMMENT, user, pass, comment+"");
     }
 }
