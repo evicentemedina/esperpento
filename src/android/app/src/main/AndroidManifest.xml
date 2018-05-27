@@ -48,6 +48,12 @@
             android:name=".ThreadDetailActivity"
             android:label="Thread Detail"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ThreadNewActivity"
+            android:label="New Thread"
+            android:parentActivityName=".CommDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

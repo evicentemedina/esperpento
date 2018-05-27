@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadHome() {
+        getSharedPreferences("comm", MODE_PRIVATE).edit().clear().apply();
         changeFragment(R.layout.fragment_loading);
         VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
             Request.Method.GET, Constants.getUrlHome(user), null,

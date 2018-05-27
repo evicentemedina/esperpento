@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="evicentemedina.esperpento.CommNewActivity"
+    tools:context=".ThreadNewActivity"
     >
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         >
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_comm_new"
+            android:id="@+id/toolbar_thread_new"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -32,24 +32,24 @@
             android:padding="16dp"
             >
             <EditText
-                android:id="@+id/comm_new_name"
+                android:id="@+id/thread_new_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
+                android:hint="Title"
                 android:inputType="text|textCapWords"
-                android:maxLength="25"
+                android:maxLength="100"
                 android:maxLines="1"
                 />
             <EditText
-                android:id="@+id/comm_new_descrip"
+                android:id="@+id/thread_new_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Description"
+                android:hint="Content"
                 android:inputType="text|textCapSentences|textMultiLine"
-                android:maxLength="255"
+                android:maxLength="2500"
                 />
             <Button
-                android:id="@+id/comm_new_create"
+                android:id="@+id/thread_new_create"
                 style="@android:style/Widget.Holo.Button"
                 android:backgroundTint="@color/colorAccent"
                 android:layout_width="wrap_content"

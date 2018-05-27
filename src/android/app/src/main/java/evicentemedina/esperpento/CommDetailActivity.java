@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -63,6 +64,9 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
         try {
             JSONObject jsonObject = new JSONObject(getIntent().getStringExtra("json"));
             comm = jsonObject.getString("name");
+
+            getSharedPreferences("comm", MODE_PRIVATE).edit().putString("comm", comm).apply();
+
             tvName.setText(comm);
             tvAdmin.setText(String.format("%s%s", tvAdmin.getText(), jsonObject.getString("admin")));
             tvThreads.setText(String.format("%s %s", jsonObject.getString("threads"),
@@ -204,6 +208,17 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
                     }
                 }
             ));
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

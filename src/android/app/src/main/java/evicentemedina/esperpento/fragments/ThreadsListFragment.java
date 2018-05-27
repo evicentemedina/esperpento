@@ -1,6 +1,8 @@
 package evicentemedina.esperpento.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +20,7 @@ import org.json.JSONObject;
 
 import evicentemedina.esperpento.R;
 import evicentemedina.esperpento.ThreadDetailActivity;
+import evicentemedina.esperpento.ThreadNewActivity;
 
 public class ThreadsListFragment extends Fragment {
 
@@ -55,13 +58,20 @@ public class ThreadsListFragment extends Fragment {
         } else {
             view = inflater.inflate(R.layout.fragment_empty, container, false);
         }
+
         FloatingActionButton fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Start create thread activity
-            }
-        });
+        SharedPreferences sp = container.getContext()
+                .getSharedPreferences("comm", Context.MODE_PRIVATE);
+        final String comm = sp.getString("comm", "");
+        if (!comm.isEmpty()) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(v.getContext(), ThreadNewActivity.class)
+                            .putExtra("comm", comm));
+                }
+            });
+        } else fab.setVisibility(View.GONE);
         return view;
     }
 
