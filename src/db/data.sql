@@ -181,6 +181,16 @@ insert into "comments" ("content", "thread", "user") values
     'Comentario de prueba 1',
     1,
     'admin'
+  ),
+  (
+    'Comentario de prueba 2',
+    1,
+    'admin'
+  ),
+  (
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut velit semper, auctor est nec, facilisis purus. Aliquam sed velit eget diam ultricies aliquet a non ipsum. Nullam dictum sollicitudin tincidunt. Aliquam dictum malesuada mauris, sit amet accumsan urna tempus quis. Nullam at metus sollicitudin lectus eleifend lobortis. Ut id mauris viverra, sagittis nibh pellentesque, rutrum dolor. Vestibulum venenatis erat vitae tellus pulvinar accumsan. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris sagittis arcu eu nulla aliquam, sit amet vulputate tellus euismod. Sed dapibus tellus nec tempus porttitor. Proin porta fringilla tellus, a viverra augue. Donec lacinia magna id neque feugiat, ac dignissim turpis ultrices. Aenean viverra sapien ut neque pretium, vitae tristique eros hendrerit. Vivamus iaculis lacus purus, quis volutpat libero placerat sed.',
+    1,
+    'admin'
   );
 
 insert into "votes_threads" values
