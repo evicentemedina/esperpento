@@ -28,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import evicentemedina.esperpento.objects.Constants;
 import evicentemedina.esperpento.objects.VolleySingleton;
 
@@ -37,7 +39,7 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
     private int threadId, vote = -1;
 
     private TextView tvTitle, tvUser, tvComm, tvContent, tvVotes, tvComments, tvTime;
-    private ImageView ivUpvote, ivDownvote, ivSend;
+    private ImageView ivUpvote, ivDownvote;
     private ListView listView;
     private EditText etComment;
 
@@ -64,7 +66,7 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
         ivDownvote = findViewById(R.id.thread_detail_downvote);
         listView = findViewById(R.id.thread_detail_listview);
         etComment = findViewById(R.id.thread_detail_comment_write);
-        ivSend = findViewById(R.id.thread_detail_comment_send);
+        ImageView ivSend = findViewById(R.id.thread_detail_comment_send);
 
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
         user = sp.getString("user", "");
@@ -86,7 +88,7 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
             tvComm.setText(jsonObject.getString("community"));
             tvVotes.setText(jsonObject.getString("votes"));
             tvComments.setText(String.format("%s %s", jsonObject.getString("comments"),
-                    "Comments"));
+                    getString(R.string.comments)));
             tvTime.setText(jsonObject.getString("time").split("[.]")[0]);
 
             VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
@@ -182,7 +184,7 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
                                                                 _votes++;
                                                                 break;
                                                         }
-                                                        votes.setText(_votes+"");
+                                                        votes.setText(String.format(Locale.getDefault(), "%d", _votes));
                                                     }
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -310,10 +312,10 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
                                 if (response.getInt("s") == 1) {
                                     etComment.setText("");
                                     loadComments();
-                                } else msg = "Error creating comment";
+                                } else msg = getString(R.string.error_creating_comment);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                msg = "Bad response";
+                                msg = getString(R.string.bad_response);
                             }
                             if (msg != null) Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
                         }
@@ -323,9 +325,9 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
                             error.printStackTrace();
                             String msg;
                             if (error.networkResponse != null)
-                                msg = "Error " + error.networkResponse.statusCode;
+                                msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                             else
-                                msg = "Connection error";
+                                msg = getString(R.string.connection_error);
                             Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
                         }
                     }

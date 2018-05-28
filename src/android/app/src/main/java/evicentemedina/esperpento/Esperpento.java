@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 
 public class Esperpento extends Application {
+
     @SuppressLint("StaticFieldLeak")
     private static Context context;
 

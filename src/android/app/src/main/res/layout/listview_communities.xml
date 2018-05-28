@@ -12,6 +12,7 @@
         android:layout_height="64dp"
         android:layout_marginEnd="8dp"
         android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/logo_image"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
             android:id="@+id/listview_comm_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/name"
             android:textSize="20sp"
             />
         <LinearLayout
@@ -33,7 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Threads"
+                android:text="@string/threads"
                 />
             <TextView
                 android:id="@+id/listview_comm_subs"
@@ -41,14 +42,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Subscriptors"
+                android:text="@string/subscriptors"
                 />
         </LinearLayout>
         <TextView
             android:id="@+id/listview_comm_descrip"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Description"
+            android:text="@string/description"
             />
     </LinearLayout>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package evicentemedina.esperpento;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("ApplySharedPref")
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity
                                 } else
                                     changeFragment(R.layout.fragment_all_communities);
                             } catch (JSONException e) {
-                                changeFragment(R.layout.fragment_error, "Bad response");
+                                changeFragment(R.layout.fragment_error, getString(R.string.bad_response));
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -129,9 +131,9 @@ public class MainActivity extends AppCompatActivity
                     error.printStackTrace();
                     String msg;
                     if (error.networkResponse != null)
-                        msg = "Error "+error.networkResponse.statusCode;
+                        msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                     else
-                        msg = "Connection error";
+                        msg = getString(R.string.connection_error);
                     changeFragment(R.layout.fragment_error, msg);
                 }
             }
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity
                             } else
                                 changeFragment(R.layout.fragment_all_communities);
                         } catch (JSONException e) {
-                            changeFragment(R.layout.fragment_error, "Bad response");
+                            changeFragment(R.layout.fragment_error, getString(R.string.bad_response));
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -159,9 +161,9 @@ public class MainActivity extends AppCompatActivity
                         error.printStackTrace();
                         String msg;
                         if (error.networkResponse != null)
-                            msg = "Error "+error.networkResponse.statusCode;
+                            msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                         else
-                            msg = "Connection error";
+                            msg = getString(R.string.connection_error);
                         changeFragment(R.layout.fragment_error, msg);
                     }
                 }
@@ -229,7 +231,7 @@ public class MainActivity extends AppCompatActivity
                             changeFragment(R.layout.fragment_threads_list);
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        changeFragment(R.layout.fragment_error, "Bad response");
+                        changeFragment(R.layout.fragment_error, getString(R.string.bad_response));
                     }
                 }
             }, new Response.ErrorListener() {
@@ -238,9 +240,9 @@ public class MainActivity extends AppCompatActivity
                     error.printStackTrace();
                     String msg;
                     if (error.networkResponse != null)
-                        msg = "Error "+error.networkResponse.statusCode;
+                        msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                     else
-                        msg = "Connection error";
+                        msg = getString(R.string.connection_error);
                     changeFragment(R.layout.fragment_error, msg);
                 }
             }

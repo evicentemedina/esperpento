@@ -70,14 +70,14 @@ public class CommNewActivity extends AppCompatActivity implements View.OnClickLi
                             String msg;
                             try {
                                 if (response.getInt("s") == 1)
-                                    msg = "Community created";
+                                    msg = getString(R.string.community_created);
                                 else {
-                                    msg = "There is already a community with that name";
+                                    msg = getString(R.string.community_already_exists);
                                     btnCreate.setEnabled(true);
                                 }
                             } catch(JSONException e) {
                                 e.printStackTrace();
-                                msg = "Bad response";
+                                msg = getString(R.string.bad_response);
                                 btnCreate.setEnabled(true);
                             }
                             Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
@@ -88,16 +88,16 @@ public class CommNewActivity extends AppCompatActivity implements View.OnClickLi
                             error.printStackTrace();
                             String msg;
                             if (error.networkResponse != null)
-                                msg = "Error "+error.networkResponse.statusCode;
+                                msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                             else
-                                msg = "Connection error";
+                                msg = getString(R.string.connection_error);
                             Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
                             btnCreate.setEnabled(true);
                         }
                     }
                 ));
             } else
-                Snackbar.make(v, "Name can't be empty", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(v, R.string.name_cant_be_empty, Snackbar.LENGTH_LONG).show();
         }
     }
 

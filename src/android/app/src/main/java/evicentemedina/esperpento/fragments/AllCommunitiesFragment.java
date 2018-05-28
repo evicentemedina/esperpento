@@ -113,8 +113,10 @@ public class AllCommunitiesFragment extends Fragment {
                 JSONObject item = items.getJSONObject(position);
                 //layout.setBackgroundColor(item.getInt("bg_color"));
                 name.setText(item.getString("name"));
-                threads.setText(String.format("%s %s", item.getString("threads"), "Threads"));
-                subs.setText(String.format("%s %s", item.getString("subs"), "Subscriptors"));
+                threads.setText(String.format("%s %s", item.getString("threads"),
+                        getString(R.string.threads)));
+                subs.setText(String.format("%s %s", item.getString("subs"),
+                        getString(R.string.subscriptors)));
                 desc.setText(item.getString("descrip"));
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -72,14 +72,14 @@ public class ThreadNewActivity extends AppCompatActivity implements View.OnClick
                             String msg;
                             try {
                                 if (response.getInt("s") == 1)
-                                    msg = "Thread created";
+                                    msg = getString(R.string.thread_created);
                                 else {
-                                    msg = "Error creating thread";
+                                    msg = getString(R.string.error_creating_thread);
                                     btnCreate.setEnabled(true);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                msg = "Bad response";
+                                msg = getString(R.string.bad_response);
                                 btnCreate.setEnabled(true);
                             }
                             Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
@@ -90,9 +90,9 @@ public class ThreadNewActivity extends AppCompatActivity implements View.OnClick
                             error.printStackTrace();
                             String msg;
                             if (error.networkResponse != null)
-                                msg = "Error "+error.networkResponse.statusCode;
+                                msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                             else
-                                msg = "Connection error";
+                                msg = getString(R.string.connection_error);
                             Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
                             btnCreate.setEnabled(true);
                         }

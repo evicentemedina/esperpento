@@ -75,12 +75,13 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
             getSharedPreferences("comm", MODE_PRIVATE).edit().putString("comm", comm).apply();
 
             tvName.setText(comm);
-            tvAdmin.setText(String.format("%s %s", "Admin:", jsonObject.getString("admin")));
+            tvAdmin.setText(String.format("%s %s", getString(R.string.admin),
+                    jsonObject.getString("admin")));
             tvThreads.setText(String.format("%s %s", jsonObject.getString("threads"),
-                    "Threads"));
+                    getString(R.string.threads)));
             tvTime.setText(jsonObject.getString("time").split("[.]")[0]);
             tvSubscriptors.setText(String.format("%s %s", jsonObject.getString("subs"),
-                    "Subscriptors"));
+                    getString(R.string.subscriptors)));
             tvDescrip.setText(jsonObject.getString("descrip"));
 
             VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
@@ -91,7 +92,7 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
                         try {
                             if (response.getInt("s") == 1) {
                                 swSub.setChecked(true);
-                                tvSubscribe.setText("Subscribed");
+                                tvSubscribe.setText(R.string.subscribed);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -177,10 +178,10 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
                         try {
                             if (response.getInt("s") == 1) {
                                 if (response.getInt("c") == 1) {
-                                    tvSubscribe.setText("Subscribed");
+                                    tvSubscribe.setText(R.string.subscribed);
                                     swSub.setChecked(true);
                                 } else if (response.getInt("c") == 0) {
-                                    tvSubscribe.setText("Unsubscribed");
+                                    tvSubscribe.setText(R.string.unsubscribed);
                                     swSub.setChecked(false);
                                 }
                                 VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
@@ -193,7 +194,7 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
                                                     tvSubscriptors.setText(String.format(
                                                             "%s %s",
                                                             response.getString("c"),
-                                                            "Subscriptors"
+                                                            getString(R.string.subscriptors)
                                                     ));
                                                 }
                                             } catch (JSONException e) {
@@ -208,11 +209,11 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
                                     }
                                 ));
                             } else {
-                                msg = "Error";
+                                msg = getString(R.string.error);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            msg = "Response error";
+                            msg = getString(R.string.bad_response);
                         }
                         if (!msg.isEmpty()) {
                             swSub.setChecked(!swSub.isChecked());
@@ -226,9 +227,9 @@ public class CommDetailActivity extends AppCompatActivity implements View.OnClic
                         swSub.setChecked(!swSub.isChecked());
                         String msg;
                         if(error.networkResponse != null)
-                            msg = "Error " + error.networkResponse.statusCode;
+                            msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                         else
-                            msg = "Connection error";
+                            msg = getString(R.string.connection_error);
                         Snackbar.make(v.getRootView(), msg, Snackbar.LENGTH_LONG).show();
                     }
                 }

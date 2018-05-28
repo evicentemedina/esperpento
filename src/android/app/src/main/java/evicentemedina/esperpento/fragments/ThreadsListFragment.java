@@ -125,8 +125,10 @@ public class ThreadsListFragment extends Fragment {
                 title.setText(item.getString("title"));
                 user.setText(item.getString("user"));
                 comm.setText(item.getString("community"));
-                votes.setText(String.format("%s Votes", item.getString("votes")));
-                comments.setText(String.format("%s Comments", item.getString("comments")));
+                votes.setText(String.format("%s %s", item.getString("votes"),
+                        getString(R.string.votes)));
+                comments.setText(String.format("%s %s", item.getString("comments"),
+                        getString(R.string.comments)));
                 time.setText(item.getString("time").split("[.]")[0]);
             } catch(JSONException e) {
                 e.printStackTrace();

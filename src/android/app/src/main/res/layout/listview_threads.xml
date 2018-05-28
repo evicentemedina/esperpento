@@ -10,7 +10,7 @@
         android:id="@+id/listview_threads_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text="@string/title"
         android:textSize="18sp"
         />
     <LinearLayout
@@ -20,24 +20,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="by "
+            android:layout_marginEnd="5dp"
+            android:text="@string/by"
             />
         <TextView
             android:id="@+id/listview_threads_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User"
+            android:text="@string/user"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" on "
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/on"
             />
         <TextView
             android:id="@+id/listview_threads_comm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Community"
+            android:text="@string/community"
             />
     </LinearLayout>
     <LinearLayout
@@ -49,14 +52,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Votes"
+            android:text="@string/votes"
             />
         <TextView
             android:id="@+id/listview_threads_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Comments"
+            android:text="@string/comments"
             />
         <TextView
             android:id="@+id/listview_threads_time"
@@ -64,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="end"
-            android:text="Time"
+            android:text="@string/time"
             />
     </LinearLayout>
 </LinearLayout>

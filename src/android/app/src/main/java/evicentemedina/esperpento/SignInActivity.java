@@ -66,14 +66,14 @@ public class SignInActivity extends AppCompatActivity
                                 String msg = "";
                                 try{
                                     if(response.getInt("s") == 1){
-                                        msg = "User created";
+                                        msg = getString(R.string.user_created);
                                         etUser.setText("");
                                         etPass1.setText("");
                                         etPass2.setText("");
                                     }else if(response.getInt("s") == 0){
-                                        msg = "User already in use";
+                                        msg = getString(R.string.user_already_exists);
                                     }else if(response.getInt("s") == -1){
-                                        msg = "User or password too long";
+                                        msg = getString(R.string.user_or_password_too_long);
                                     }
                                 }catch(JSONException e){
                                     msg = response.toString();
@@ -85,19 +85,19 @@ public class SignInActivity extends AppCompatActivity
                             public void onErrorResponse(VolleyError error){
                                 String msg;
                                 if(error.networkResponse != null)
-                                    msg = "Error "+error.networkResponse.statusCode;
+                                    msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                                 else
-                                    msg = "Connection error";
+                                    msg = getString(R.string.connection_error);
                                 Snackbar.make(fv, msg, Snackbar.LENGTH_LONG).show();
                             }
                         }
                     );
                     VolleySingleton.getInstance().addToRequestQueue(jsonObjectRequest);
                 }else{
-                    Snackbar.make(v, "The passwords don't match", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, R.string.passwords_dont_match, Snackbar.LENGTH_LONG).show();
                 }
             }else{
-                Snackbar.make(v, "Fill all inputs", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(v, R.string.fill_all_inputs, Snackbar.LENGTH_LONG).show();
             }
         }
     }

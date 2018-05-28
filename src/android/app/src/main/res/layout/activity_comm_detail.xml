@@ -44,6 +44,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/ic_launcher"
+                    android:contentDescription="@string/logo_image"
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,14 +55,14 @@
                         android:id="@+id/comm_detail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name"
+                        android:text="@string/name"
                         android:textSize="24sp"
                         />
                     <TextView
                         android:id="@+id/comm_detail_admin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Admin: "
+                        android:text="@string/admin"
                         />
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -70,7 +71,7 @@
                             android:id="@+id/comm_detail_threads"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Threads"
+                            android:text="@string/threads"
                             />
                         <TextView
                             android:id="@+id/comm_detail_time"
@@ -78,7 +79,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Time"
+                            android:text="@string/time"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -89,7 +90,7 @@
                             android:id="@+id/comm_detail_subscriptors"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="Subscriptors"
+                            android:text="@string/subscriptors"
                             />
                         <TextView
                             android:id="@+id/comm_detail_sub_tv"
@@ -98,7 +99,7 @@
                             android:paddingEnd="8dp"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Subscribe"
+                            android:text="@string/subscribe"
                             tools:ignore="RtlSymmetry"
                             />
                         <Switch
@@ -114,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="8dp"
-                android:text="Description"
+                android:text="@string/description"
                 />
         </LinearLayout>
         <FrameLayout

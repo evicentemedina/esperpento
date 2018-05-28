@@ -1,5 +1,6 @@
 package evicentemedina.esperpento;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -86,6 +87,7 @@ public class LoginActivity extends AppCompatActivity
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET, Constants.getUrlLogin(user, pass), null,
                     new Response.Listener<JSONObject>(){
+                        @SuppressLint("ApplySharedPref")
                         @Override
                         public void onResponse(JSONObject response){
                             String msg = "";
@@ -100,7 +102,7 @@ public class LoginActivity extends AppCompatActivity
                                     startActivity(new Intent(fv.getContext(), MainActivity.class));
                                     finish();
                                 }else
-                                    msg = fv.getContext().getString(R.string.user_or_pass_incorrect);
+                                    msg = getString(R.string.user_or_pass_incorrect);
                             }catch(JSONException e){
                                 msg = response.toString();
                             }
@@ -111,16 +113,16 @@ public class LoginActivity extends AppCompatActivity
                         public void onErrorResponse(VolleyError error){
                             String msg;
                             if(error.networkResponse != null)
-                                msg = "Error "+error.networkResponse.statusCode;
+                                msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
                             else
-                                msg = "Connection error";
+                                msg = getString(R.string.connection_error);
                             Snackbar.make(fv, msg, Snackbar.LENGTH_LONG).show();
                         }
                     }
                 );
                 VolleySingleton.getInstance().addToRequestQueue(jsonObjectRequest);
             }else
-                Snackbar.make(v, "User or password empty", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(v, R.string.user_or_password_empty, Snackbar.LENGTH_LONG).show();
         }else if(id == R.id.loginBtnSignin)
             startActivity(new Intent(v.getContext(), SignInActivity.class));
     }

@@ -7,7 +7,7 @@
     <item
         android:id="@+id/menuLogin_toggleUrl"
         android:orderInCategory="100"
-        android:title="Production URL"
+        android:title="@string/development_url"
         app:showAsAction="never"
         android:checkable="true"
         />

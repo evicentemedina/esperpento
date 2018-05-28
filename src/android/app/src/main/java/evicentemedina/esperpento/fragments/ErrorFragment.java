@@ -23,9 +23,8 @@ public class ErrorFragment extends Fragment {
         Bundle args = getArguments();
         if(args != null){
             TextView textView = view.findViewById(R.id.frag_error_tv);
-            textView.setText(
-                    String.format("%s\n\n%s", textView.getText(), args.getString("args"))
-            );
+            textView.setText(String.format("%s\n\n%s", getString(R.string.an_error_occurred),
+                    args.getString("args")));
         }
         return view;
     }

@@ -35,7 +35,7 @@
                 android:id="@+id/thread_detail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title"
+                android:text="@string/title"
                 android:textSize="18sp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -47,24 +47,27 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="by "
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/by"
                     />
                 <TextView
                     android:id="@+id/thread_detail_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User"
+                    android:text="@string/user"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" on "
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/on"
                     />
                 <TextView
                     android:id="@+id/thread_detail_comm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Community"
+                    android:text="@string/community"
                     />
             </LinearLayout>
             <TextView
@@ -84,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_arrow_upward"
+                    android:contentDescription="@string/upvote"
                     />
                 <TextView
                     android:id="@+id/thread_detail_votes"
@@ -92,13 +96,14 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
-                    android:text="Votes"
+                    android:text="@string/votes"
                     />
                 <ImageView
                     android:id="@+id/thread_detail_downvote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_arrow_downward"
+                    android:contentDescription="@string/downvote"
                     />
                 <TextView
                     android:id="@+id/thread_detail_comments"
@@ -106,7 +111,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Comments"
+                    android:text="@string/comments"
                     />
                 <TextView
                     android:id="@+id/thread_detail_time"
@@ -114,7 +119,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical|end"
-                    android:text="Time"
+                    android:text="@string/time"
                     />
             </LinearLayout>
             <ListView
@@ -123,6 +128,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:isScrollContainer="false"
+                tools:ignore="NestedScrolling"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,7 +139,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Write a comment"
+                    android:hint="@string/write_a_comment"
                     android:inputType="text|textCapSentences|textMultiLine"
                     android:maxLength="1000"
                     />
@@ -142,6 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_send"
+                    android:contentDescription="@string/send"
                     />
             </LinearLayout>
         </LinearLayout>

@@ -32,7 +32,7 @@ public final class Constants {
             INS_COMMENT = "ins_comment.php?u=%s&p=%s&t=%s&c=%s",
             INS_VOTE_COMMENT = "ins_vote_comment.php?u=%s&p=%s&c=%s";
 
-    private static String URL = URL_DEV;
+    private static String URL = URL_PROD;
 
     public static InputFilter[] getInputFilters(InputFilter[] inputFilters) {
         InputFilter[] _inputFilters = new InputFilter[inputFilters.length + 1];

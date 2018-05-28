@@ -35,7 +35,7 @@
                 android:id="@+id/thread_new_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Title"
+                android:hint="@string/title"
                 android:inputType="text|textCapWords"
                 android:maxLength="100"
                 android:maxLines="1"
@@ -44,7 +44,7 @@
                 android:id="@+id/thread_new_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Content"
+                android:hint="@string/content"
                 android:inputType="text|textCapSentences|textMultiLine"
                 android:maxLength="2500"
                 />
@@ -57,7 +57,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_gravity="end"
-                android:text="Create"
+                android:text="@string/create"
                 />
         </LinearLayout>
     </ScrollView>
