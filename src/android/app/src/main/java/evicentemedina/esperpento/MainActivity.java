@@ -1,7 +1,9 @@
 package evicentemedina.esperpento;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +14,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -168,10 +173,27 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             ));
-        } else if (id == R.id.nav_preferences) {
+        //} else if (id == R.id.nav_preferences) {
 
         } else if (id == R.id.nav_about) {
-
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.about);
+            //builder.setMessage(R.string.about_msg);
+            TextView textView = new TextView(this);
+            SpannableString spannableString = new SpannableString(getText(R.string.about_msg));
+            Linkify.addLinks(spannableString, Linkify.WEB_URLS);
+            textView.setText(spannableString);
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            textView.setPadding(50, 25, 0, 0);
+            builder.setView(textView);
+            builder.setPositiveButton("0k", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Empty
+                }
+            });
+            builder.create();
+            builder.show();
         } else if (id == R.id.nav_logout) {
             SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
             editor.clear();

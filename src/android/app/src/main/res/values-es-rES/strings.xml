@@ -64,4 +64,5 @@
     <string name="community_detail">Detalle de Comunidad</string>
     <string name="thread_detail">Detalle de Hilo</string>
     <string name="new_thread">Nuevo Hilo</string>
+    <string name="about_msg">Aplicación desarrollada por Emilio Vicente Medina como Proyecto de Fin de Ciclo de Desarrollo de Aplicaciones Multiplataforma. Respositorio GitHub: https://github.com/evicentemedina/esperpento</string>
 </resources>
