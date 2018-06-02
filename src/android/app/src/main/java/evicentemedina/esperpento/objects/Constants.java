@@ -30,7 +30,8 @@ public final class Constants {
             INS_THREAD = "ins_thread.php?u=%s&p=%s&comm=%s&t=%s&c=%s",
             GET_THREAD_COMMENTS = "get_thread_comments.php?t=%s&u=%s",
             INS_COMMENT = "ins_comment.php?u=%s&p=%s&t=%s&c=%s",
-            INS_VOTE_COMMENT = "ins_vote_comment.php?u=%s&p=%s&c=%s";
+            INS_VOTE_COMMENT = "ins_vote_comment.php?u=%s&p=%s&c=%s",
+            DEL_COMMENT = "del_comment.php?u=%s&p=%s&c=%s";
 
     private static String URL = URL_PROD;
 
@@ -153,5 +154,9 @@ public final class Constants {
     public static String getUrlInsVoteComment(@NonNull String user, @NonNull String pass,
                                               long comment) {
         return encode(INS_VOTE_COMMENT, user, pass, comment+"");
+    }
+
+    public static String getUrlDelComment(@NonNull String user, @NonNull String pass, long comment) {
+        return encode(DEL_COMMENT, user, pass, comment+"");
     }
 }

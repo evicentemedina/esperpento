@@ -1,5 +1,7 @@
 package evicentemedina.esperpento;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -199,6 +201,53 @@ public class ThreadDetailActivity extends AppCompatActivity implements View.OnCl
                                     ));
                                 }
                             });
+                            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                @Override
+                                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
+                                    TextView tvUser = view.findViewById(R.id.listview_comments_user);
+                                    if (tvUser.getText().toString().equals(user)) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+                                        builder.setTitle("Delete?");
+                                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
+                                                    Request.Method.GET, Constants.getUrlDelComment(user, pass, id), null,
+                                                    new Response.Listener<JSONObject>() {
+                                                        @Override
+                                                        public void onResponse(JSONObject response) {
+                                                            try {
+                                                                if (response.getInt("s") == 1) {
+                                                                    loadComments();
+                                                                }
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    }, new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            error.printStackTrace();
+                                                        }
+                                                    }
+                                                ));
+                                            }
+                                        });
+                                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // Empty
+                                            }
+                                        });
+                                        builder.create().show();
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                            });
+                        } else {
+                            listView.setAdapter(null);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
