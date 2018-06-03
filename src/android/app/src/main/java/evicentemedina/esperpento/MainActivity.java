@@ -116,32 +116,32 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_my_communities) {
             changeFragment(R.layout.fragment_loading);
             VolleySingleton.getInstance().addToRequestQueue(new JsonObjectRequest(
-                    Request.Method.GET, Constants.getUrlMyComm(user), null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                if (response.getInt("s") == 1) {
-                                    changeFragment(R.layout.fragment_all_communities,
-                                            response.getJSONArray("c").toString());
-                                } else
-                                    changeFragment(R.layout.fragment_all_communities);
-                            } catch (JSONException e) {
-                                changeFragment(R.layout.fragment_error, getString(R.string.bad_response));
-                            }
+                Request.Method.GET, Constants.getUrlMyComm(user), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getInt("s") == 1) {
+                                changeFragment(R.layout.fragment_all_communities,
+                                        response.getJSONArray("c").toString());
+                            } else
+                                changeFragment(R.layout.fragment_all_communities);
+                        } catch (JSONException e) {
+                            changeFragment(R.layout.fragment_error, getString(R.string.bad_response));
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                    String msg;
-                    if (error.networkResponse != null)
-                        msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
-                    else
-                        msg = getString(R.string.connection_error);
-                    changeFragment(R.layout.fragment_error, msg);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        String msg;
+                        if (error.networkResponse != null)
+                            msg = getString(R.string.error) + " " + error.networkResponse.statusCode;
+                        else
+                            msg = getString(R.string.connection_error);
+                        changeFragment(R.layout.fragment_error, msg);
+                    }
                 }
-            }
             ));
         } else if (id == R.id.nav_all_communities) {
             changeFragment(R.layout.fragment_loading);
